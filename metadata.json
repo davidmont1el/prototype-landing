@@ -1,0 +1,6 @@
+{
+  "name": "Aura Smart Mirror & Bio-Mesh Gym",
+  "description": "An interactive high-fidelity product landing page for Aura, the intelligent health-tech system combining a smart reflection mirror and Bluetooth-sensored bio-mesh shirt for precision form and biometric tracking in real time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
