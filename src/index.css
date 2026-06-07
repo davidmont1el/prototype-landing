@@ -9,14 +9,14 @@
   --color-brand-blue: #60a5fa;
   --color-brand-green: #10b981;
   --color-brand-purple: #a855f7;
-  --color-brand-orange: #f97316;
-  --color-brand-red: #ef4444;
+  --color-brand-orange: #d11212;
+  --color-brand-red: #d11212;
 }
 
 @layer utilities {
   /* Glowing effects matching "Artistic Flair" */
   .glow-orange {
-    box-shadow: 0 0 25px rgba(249, 115, 22, 0.35);
+    box-shadow: 0 0 25px rgba(209, 18, 18, 0.35);
   }
   .glow-blue {
     box-shadow: 0 0 25px rgba(96, 165, 250, 0.35);

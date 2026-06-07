@@ -38,7 +38,7 @@ export default function PricingModel() {
     setTimeout(() => {
       const serialPart = Math.floor(100000 + Math.random() * 900000);
       const colorAbbr = selectedColor.substring(0, 3).toUpperCase();
-      const code = `AURA-${colorAbbr}-${mirrorSize}-${serialPart}`;
+      const code = `IRONPATH-${colorAbbr}-${mirrorSize}-${serialPart}`;
       
       setReservePassCode(code);
       setIsSubmitting(false);
@@ -50,11 +50,11 @@ export default function PricingModel() {
     <div className="p-1 sm:p-4">
       {/* Dynamic Render: Reserved Pass vs Setup Deck */}
       {isReserved ? (
-        <div className="max-w-xl mx-auto border border-brand-cyan/30 bg-zinc-950/80 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[0_0_30px_rgba(0,f0,ff,0.15)]">
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-brand-cyan/2 to-transparent pointer-events-none" />
+        <div className="max-w-xl mx-auto border border-brand-red/30 bg-zinc-950/80 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[0_0_30px_rgba(209,18,18,0.15)]">
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-brand-red/2 to-transparent pointer-events-none" />
           
           <div className="flex flex-col items-center text-center space-y-4">
-            <div className="w-14 h-14 rounded-full bg-brand-cyan/10 border border-brand-cyan flex items-center justify-center text-brand-cyan">
+            <div className="w-14 h-14 rounded-full bg-brand-red/10 border border-brand-red flex items-center justify-center text-brand-red">
               <ShieldCheck className="w-8 h-8 animate-pulse" />
             </div>
             
@@ -62,7 +62,7 @@ export default function PricingModel() {
               <span className="text-[10px] font-mono font-bold text-brand-green bg-brand-green/10 px-2.5 py-1 rounded-full uppercase tracking-widest select-none">
                 MEMBER ALPHA REGISTERED
               </span>
-              <h3 className="text-2xl font-black text-white tracking-tight mt-2.5">Your Aura Gym is Secured.</h3>
+              <h3 className="text-2xl font-black text-white tracking-tight mt-2.5">Your IronPath Gym is Secured.</h3>
               <p className="text-xs text-zinc-400 mt-1 max-w-sm mx-auto leading-relaxed">
                 Welcome to the future of biomechanical feedback. Your reservation spot has been logged into the ledger system.
               </p>
@@ -103,7 +103,7 @@ export default function PricingModel() {
 
               <div>
                 <span className="text-[9px] text-zinc-500 block text-center select-none">ALLOCATION PASS SERIAL</span>
-                <p className="text-md font-bold text-center tracking-widest text-brand-cyan select-all mt-0.5">{reservePassCode}</p>
+                <p className="text-md font-bold text-center tracking-widest text-brand-red select-all mt-0.5">{reservePassCode}</p>
                 
                 {/* SVG Barcode design */}
                 <div className="mt-4 flex flex-col items-center">
@@ -116,7 +116,7 @@ export default function PricingModel() {
                       />
                     ))}
                   </div>
-                  <span className="text-[8px] text-zinc-500 mt-1 uppercase">AURA-CORRESPONDENT-LEDGER</span>
+                  <span className="text-[8px] text-zinc-500 mt-1 uppercase">IRONPATH-CORRESPONDENT-LEDGER</span>
                 </div>
               </div>
 
@@ -133,7 +133,7 @@ export default function PricingModel() {
                 setEmail('');
                 setZipCode('');
               }}
-              className="cursor-pointer text-xs font-mono font-bold text-brand-cyan underline uppercase hover:text-white pt-2.5"
+              className="cursor-pointer text-xs font-mono font-bold text-brand-red underline uppercase hover:text-white pt-2.5"
             >
               Configure or Book Another System
             </button>
@@ -154,13 +154,13 @@ export default function PricingModel() {
                   onClick={() => setMirrorSize('43')}
                   className={`cursor-pointer border text-left p-4 rounded-2xl transition-all duration-300 ${
                     mirrorSize === '43'
-                      ? 'border-brand-cyan bg-brand-cyan/5 text-white ring-1 ring-brand-cyan/25'
+                      ? 'border-brand-red bg-brand-red/5 text-white ring-1 ring-brand-red/25'
                       : 'border-zinc-800 bg-zinc-950/40 text-zinc-400 hover:border-zinc-700'
                   }`}
                 >
                   <div className="flex justify-between items-start">
                     <span className="text-sm font-bold text-zinc-100">43" PORTRAIT CASING</span>
-                    <span className="text-xs font-mono font-bold text-brand-cyan">$1,495</span>
+                    <span className="text-xs font-mono font-bold text-brand-red">$1,495</span>
                   </div>
                   <p className="text-[11px] text-zinc-400 mt-1 leading-normal">
                     Designed for compact wall spaces or bedrooms. Full visual posture tracking fit with stellar resolution.
@@ -172,13 +172,13 @@ export default function PricingModel() {
                   onClick={() => setMirrorSize('55')}
                   className={`cursor-pointer border text-left p-4 rounded-2xl transition-all duration-300 ${
                     mirrorSize === '55'
-                      ? 'border-brand-cyan bg-brand-cyan/5 text-white ring-1 ring-brand-cyan/25'
+                      ? 'border-brand-red bg-brand-red/5 text-white ring-1 ring-brand-red/25'
                       : 'border-zinc-800 bg-zinc-950/40 text-zinc-400 hover:border-zinc-700'
                   }`}
                 >
                   <div className="flex justify-between items-start">
                     <span className="text-sm font-bold text-zinc-100">55" STUDIO MONOLITH</span>
-                    <span className="text-xs font-mono font-bold text-brand-cyan">$1,995</span>
+                    <span className="text-xs font-mono font-bold text-brand-red">$1,995</span>
                   </div>
                   <p className="text-[11px] text-zinc-400 mt-1 leading-normal">
                     Stunning edge-to-edge reflection designed for permanent home gyms. Full side skeletal-overlay.
@@ -244,7 +244,7 @@ export default function PricingModel() {
                         onClick={() => setShirtSize(sz)}
                         className={`cursor-pointer py-2 text-xs font-mono font-bold rounded-lg border text-center transition-all ${
                           shirtSize === sz
-                            ? 'border-brand-cyan bg-brand-cyan/10 text-white font-black'
+                            ? 'border-brand-red bg-brand-red/10 text-white font-black'
                             : 'border-zinc-800 bg-zinc-950/40 text-zinc-400 hover:border-zinc-700'
                         }`}
                       >
@@ -271,7 +271,7 @@ export default function PricingModel() {
                       onClick={() => setSelectedColor(col)}
                       className={`cursor-pointer py-2 px-3 text-xs font-semibold rounded-xl border text-center flex-1 transition-all capitalize ${
                         selectedColor === col
-                          ? 'border-brand-cyan bg-brand-cyan/5 text-white font-bold'
+                          ? 'border-brand-red bg-brand-red/5 text-white font-bold'
                           : 'border-zinc-800 bg-zinc-500/2 text-zinc-400 hover:border-zinc-700'
                       }`}
                     >
@@ -292,12 +292,12 @@ export default function PricingModel() {
                   onClick={() => setCryoCooling(!cryoCooling)}
                   className={`cursor-pointer text-left p-2 px-3 rounded-xl border flex items-center justify-between w-full h-[38px] transition-all duration-200 ${
                     cryoCooling
-                      ? 'border-brand-cyan bg-brand-cyan/5 text-white'
+                      ? 'border-brand-red bg-brand-red/5 text-white'
                       : 'border-zinc-800 bg-zinc-950/40 text-zinc-400 hover:border-zinc-700'
                   }`}
                 >
                   <span className="text-xs font-medium">Add Cryo-Flow cooling fibers</span>
-                  <span className="text-[11px] font-mono font-bold text-brand-cyan">+$59</span>
+                  <span className="text-[11px] font-mono font-bold text-brand-red">+$59</span>
                 </button>
               </div>
 
@@ -311,16 +311,16 @@ export default function PricingModel() {
             <form onSubmit={handleReservation} className="space-y-5">
               <div className="border-b border-zinc-800 pb-3">
                 <div className="flex items-center gap-1">
-                  <Package className="w-4 h-4 text-brand-cyan" />
+                  <Package className="w-4 h-4 text-brand-red" />
                   <span className="text-[10px] text-zinc-400 font-mono tracking-widest font-bold uppercase block">SECURE RESERVATION</span>
                 </div>
-                <h4 className="text-lg font-black text-white italic tracking-tight mt-1">AURA SMART CORE PACKAGE</h4>
+                <h4 className="text-lg font-black text-white italic tracking-tight mt-1">IRONPATH SMART CORE PACKAGE</h4>
               </div>
 
               {/* Receipts details */}
               <div className="space-y-2.5 text-xs font-mono border-b border-zinc-800 pb-4">
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">Aura Cabinet (Casing: {mirrorSize}")</span>
+                  <span className="text-zinc-400">IronPath Cabinet (Casing: {mirrorSize}")</span>
                   <span className="text-zinc-200">${baseMirrorPrice}</span>
                 </div>
                 <div className="flex justify-between">
@@ -349,7 +349,7 @@ export default function PricingModel() {
 
                 <div className="flex justify-between text-[15px] font-bold text-white border-t border-zinc-800/80 pt-3">
                   <span>ESTIMATED TOTAL</span>
-                  <span className="text-brand-cyan">${grandTotal}</span>
+                  <span className="text-brand-red">${grandTotal}</span>
                 </div>
               </div>
 
@@ -363,7 +363,7 @@ export default function PricingModel() {
                     placeholder="E.g., Elena Rostova"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-cyan placeholder-zinc-600 transition-colors"
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-red placeholder-zinc-600 transition-colors"
                   />
                   <input
                     type="email"
@@ -371,14 +371,14 @@ export default function PricingModel() {
                     placeholder="activeathlete@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-cyan placeholder-zinc-600 transition-colors"
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-red placeholder-zinc-600 transition-colors"
                   />
                   <input
                     type="text"
                     placeholder="90210 (For local freight logistics)"
                     value={zipCode}
                     onChange={(e) => setZipCode(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-cyan placeholder-zinc-600 transition-colors"
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-red placeholder-zinc-600 transition-colors"
                   />
                 </div>
               </div>
@@ -387,7 +387,7 @@ export default function PricingModel() {
               <button
                 type="submit"
                 disabled={isSubmitting || !name || !email}
-                className="cursor-pointer w-full text-center py-3 bg-brand-cyan text-slate-950 font-black tracking-wide text-xs uppercase rounded-xl transition-all hover:bg-white hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:hover:scale-100 shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+                className="cursor-pointer w-full text-center py-3 bg-brand-red text-white hover:bg-[#b00e0e] font-black tracking-wide text-xs uppercase rounded-xl transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:hover:scale-100 shadow-[0_0_15px_rgba(209,18,18,0.25)]"
               >
                 {isSubmitting ? (
                   <span>RESERVING DEPLOYMENT KEY...</span>

@@ -28,6 +28,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import SmartMirror from './components/SmartMirror';
 import SmartShirt from './components/SmartShirt';
 import PricingModel from './components/PricingModel';
+import ResearchJournal from './components/ResearchJournal';
+import IronPathLogo from './components/IronPathLogo';
 import { FAQS, RECENT_TESTIMONIALS } from './data';
 
 export default function App() {
@@ -46,10 +48,18 @@ export default function App() {
   return (
     <div className="min-h-screen kinetic-dark text-zinc-100 font-sans selection:bg-brand-orange selection:text-zinc-950 overflow-x-hidden">
       
+      {/* CSE 440 ACADEMIC CONTEXT BANNER */}
+      <div className="bg-gradient-to-r from-brand-red/20 via-zinc-900 to-zinc-950 text-white border-b border-white/5 font-mono py-2 px-4 text-center text-[10px] tracking-wider relative z-50 flex flex-col sm:flex-row items-center justify-center gap-2">
+        <span className="font-extrabold text-brand-red bg-brand-red/10 px-2 py-0.5 rounded-full uppercase scale-90">CSE 440 DESIGN ARTIFACT</span>
+        <span>UNIVERSITY OF WASHINGTON • SPRING 2026 • TEAM IRONPATH</span>
+        <span className="text-zinc-400 hidden sm:inline">|</span>
+        <span className="text-zinc-300">RESEARCH-BACKED SMART ATHLETIC SUITE</span>
+      </div>
+
       {/* Background Ambience / Glowing particles mock */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[-10%] left-[20%] w-[450px] h-[450px] rounded-full bg-brand-orange/6 filter blur-[150px] animate-pulse" />
-        <div className="absolute top-[20%] right-[15%] w-[450px] h-[450px] rounded-full bg-brand-blue/6 filter blur-[160px]" />
+        <div className="absolute top-[-10%] left-[20%] w-[450px] h-[450px] rounded-full bg-brand-red/4 filter blur-[150px] animate-pulse" />
+        <div className="absolute top-[20%] right-[15%] w-[450px] h-[450px] rounded-full bg-zinc-800/5 filter blur-[160px]" />
       </div>
 
       {/* HEADER NAVIGATION */}
@@ -57,37 +67,28 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           
           {/* Logo */}
-          <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => scrollToSection('hero')}>
-            <div className="w-10 h-10 rounded-lg bg-brand-orange/15 border border-brand-orange/40 flex items-center justify-center glow-orange">
-              <Dumbbell className="w-5 h-5 text-brand-orange" />
-            </div>
-            <div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-xl font-black tracking-widest text-white font-sans italic">AURA</span>
-                <span className="text-[10px] font-mono text-brand-orange font-bold tracking-widest pl-0.5">BIO-MESH</span>
-              </div>
-              <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-widest block -mt-1 font-semibold">PRECISION SMART LAB</span>
-            </div>
+          <div onClick={() => scrollToSection('hero')} className="cursor-pointer">
+            <IronPathLogo size="sm" />
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8 text-xs font-mono tracking-wider text-zinc-400">
-            <button onClick={() => scrollToSection('how-it-works')} className="cursor-pointer hover:text-brand-orange hover:underline hover:underline-offset-4 transition-colors">SYNERGY LOOP</button>
-            <button onClick={() => scrollToSection('interactive-mirror')} className="cursor-pointer hover:text-brand-orange hover:underline hover:underline-offset-4 transition-colors">GLASS HUD</button>
-            <button onClick={() => scrollToSection('smart-shirt')} className="cursor-pointer hover:text-brand-orange hover:underline hover:underline-offset-4 transition-colors">AEROWEAVE™ SHIRT</button>
-            <button onClick={() => scrollToSection('biometric-specs')} className="cursor-pointer hover:text-brand-orange hover:underline hover:underline-offset-4 transition-colors">BIO-STATS</button>
-            <button onClick={() => scrollToSection('pricing')} className="cursor-pointer hover:text-brand-orange hover:underline hover:underline-offset-4 transition-colors">RESERVE PLATFORM</button>
+          <nav className="hidden md:flex items-center gap-7 text-xs font-mono tracking-wider text-zinc-400">
+            <button onClick={() => scrollToSection('design-archive')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">DESIGN ARCHIVE</button>
+            <button onClick={() => scrollToSection('how-it-works')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">SYNERGY</button>
+            <button onClick={() => scrollToSection('interactive-mirror')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">GLASS HUD</button>
+            <button onClick={() => scrollToSection('smart-shirt')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">AEROWEAVE™</button>
+            <button onClick={() => scrollToSection('pricing')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">RESERVE</button>
           </nav>
 
           {/* Desktop Right CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <span className="text-[10px] font-mono text-brand-orange flex items-center gap-1.5 font-bold tracking-wider">
-              <span className="inline-block w-2 h-2 rounded-full bg-brand-orange animate-ping" />
+            <span className="text-[10px] font-mono text-brand-red flex items-center gap-1.5 font-bold tracking-wider">
+              <span className="inline-block w-2 h-2 rounded-full bg-brand-red animate-ping" />
               BETA ACCREDITED
             </span>
             <button 
               onClick={() => scrollToSection('pricing')}
-              className="cursor-pointer text-xs font-mono font-bold bg-brand-orange hover:bg-white text-zinc-950 px-5 py-2.5 rounded-lg uppercase tracking-wider transition-all hover:scale-105 active:scale-95 duration-200 shadow-[0_0_15px_rgba(249,115,22,0.25)]"
+              className="cursor-pointer text-xs font-mono font-bold bg-brand-red hover:bg-[#b00e0e] text-white px-5 py-2.5 rounded-lg uppercase tracking-wider transition-all hover:scale-105 active:scale-95 duration-200 shadow-[0_0_15px_rgba(209,18,18,0.25)]"
             >
               PRE-ORDER CORE
             </button>
@@ -114,20 +115,20 @@ export default function App() {
             className="fixed inset-x-0 top-20 bg-zinc-950/95 border-b border-zinc-900 p-6 z-40 md:hidden font-mono text-center space-y-6 shadow-2xl"
           >
             <div className="flex flex-col gap-5 text-sm uppercase">
-              <button onClick={() => scrollToSection('how-it-works')} className="text-zinc-300 hover:text-brand-orange">Synergy Loop</button>
-              <button onClick={() => scrollToSection('interactive-mirror')} className="text-zinc-300 hover:text-brand-orange">Glass HUD</button>
-              <button onClick={() => scrollToSection('smart-shirt')} className="text-zinc-300 hover:text-brand-orange">Aeroweave™ Shirt</button>
-              <button onClick={() => scrollToSection('biometric-specs')} className="text-zinc-300 hover:text-brand-orange">Bio-Stats</button>
-              <button onClick={() => scrollToSection('pricing')} className="text-zinc-300 hover:text-brand-orange">Pricing & Reservation</button>
+              <button onClick={() => scrollToSection('design-archive')} className="text-zinc-300 hover:text-brand-red">Design Archive</button>
+              <button onClick={() => scrollToSection('how-it-works')} className="text-zinc-300 hover:text-brand-red">Synergy Layout</button>
+              <button onClick={() => scrollToSection('interactive-mirror')} className="text-zinc-300 hover:text-brand-red">Glass HUD</button>
+              <button onClick={() => scrollToSection('smart-shirt')} className="text-zinc-300 hover:text-brand-red">Aeroweave™ Shirt</button>
+              <button onClick={() => scrollToSection('pricing')} className="text-zinc-300 hover:text-brand-red">Reserve Platform</button>
             </div>
             <div className="pt-4 border-t border-zinc-900 flex flex-col gap-4 items-center">
-              <span className="text-xs text-brand-orange flex items-center gap-1.5 justify-center font-bold">
-                <span className="w-2 h-2 rounded-full bg-brand-orange animate-ping" />
+              <span className="text-xs text-brand-red flex items-center gap-1.5 justify-center font-bold">
+                <span className="w-2 h-2 rounded-full bg-brand-red animate-ping" />
                 SYSTEM ENTRANCE LIVE
               </span>
               <button 
                 onClick={() => scrollToSection('pricing')}
-                className="w-full text-xs font-bold bg-brand-orange text-zinc-950 py-3 rounded-lg uppercase tracking-wider"
+                className="w-full text-xs font-bold bg-brand-red text-white py-3 rounded-lg uppercase tracking-wider"
               >
                 PRE-ORDER SYSTEM
               </button>
@@ -144,9 +145,9 @@ export default function App() {
           <div className="lg:col-span-7 space-y-8 text-left">
             
             {/* Tagline Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-orange/10 border border-brand-orange/20 rounded-full">
-              <Bluetooth className="w-3.5 h-3.5 text-brand-orange animate-pulse" />
-              <span className="text-[10px] font-mono font-bold text-brand-orange tracking-widest uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-brand-red/10 border border-brand-red/20 rounded-full">
+              <Bluetooth className="w-3.5 h-3.5 text-brand-red animate-pulse" />
+              <span className="text-[10px] font-mono font-bold text-brand-red tracking-widest uppercase">
                 Sensored Shirt + Smart Mirror Synergy
               </span>
             </div>
@@ -154,20 +155,20 @@ export default function App() {
             {/* Display Headline */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[1.08] italic">
               BEYOND REFLECTION.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-amber-400 to-brand-blue">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red via-zinc-100 to-zinc-400">
                 TRUE KINETIC INTEGRITY.
               </span>
             </h1>
 
             {/* Sub-headline */}
             <p className="text-base sm:text-lg text-zinc-400 max-w-2xl leading-relaxed font-sans">
-              Meet <strong className="text-white font-medium">AURA</strong>: The world's first unified exercise environment syncing raw high-density biosensors embedded directly in a compression garment to a clinical-grade smart mirror. Every angle is measured, every heartbeat clocked, and every rep validated with sub-millisecond Bluetooth precision.
+              Meet <strong className="text-white font-medium">IRONPATH</strong>: The world's first unified exercise environment syncing raw high-density biosensors embedded directly in a compression garment to a clinical-grade smart mirror. Every angle is measured, every heartbeat clocked, and every rep validated with sub-millisecond Bluetooth precision.
             </p>
 
             {/* Features Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2 font-sans">
               <div className="flex gap-2.5 items-start">
-                <div className="p-1.5 text-brand-orange bg-brand-orange/10 border border-brand-orange/15 rounded-lg flex-shrink-0">
+                <div className="p-1.5 text-brand-red bg-brand-red/10 border border-brand-red/15 rounded-lg flex-shrink-0">
                   <Target className="w-4 h-4" />
                 </div>
                 <div>
@@ -177,7 +178,7 @@ export default function App() {
               </div>
 
               <div className="flex gap-2.5 items-start">
-                <div className="p-1.5 text-brand-blue bg-brand-blue/10 border border-brand-blue/15 rounded-lg flex-shrink-0">
+                <div className="p-1.5 text-brand-red bg-brand-red/10 border border-brand-red/15 rounded-lg flex-shrink-0">
                   <Activity className="w-4 h-4" />
                 </div>
                 <div>
@@ -187,8 +188,8 @@ export default function App() {
               </div>
 
               <div className="flex gap-2.5 items-start">
-                <div className="p-1.5 text-brand-green bg-brand-green/10 border border-brand-green/15 rounded-lg flex-shrink-0">
-                  <Gauge className="w-4 h-4" />
+                <div className="p-1.5 text-zinc-400 bg-zinc-900 border border-zinc-800 rounded-lg flex-shrink-0">
+                  <Gauge className="w-4 h-4 text-zinc-300" />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-zinc-200">Strict Rep Auditing</h4>
@@ -201,7 +202,7 @@ export default function App() {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button 
                 onClick={() => scrollToSection('pricing')}
-                className="cursor-pointer text-center px-8 py-4 bg-brand-orange hover:bg-amber-500 text-white font-extrabold tracking-wide text-xs uppercase rounded-lg transition-all shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:scale-105"
+                className="cursor-pointer text-center px-8 py-4 bg-brand-red hover:bg-[#b00e0e] text-white font-extrabold tracking-wide text-xs uppercase rounded-lg transition-all shadow-[0_0_20px_rgba(209,18,18,0.35)] hover:scale-105"
               >
                 SECURE PLATFORM RESERVATION
               </button>
@@ -211,7 +212,7 @@ export default function App() {
                 className="cursor-pointer text-center px-6 py-4 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-805 font-bold text-xs text-zinc-100 rounded-lg transition-all flex items-center justify-center gap-1.5"
               >
                 <span>TEST THE GLASS HUD</span>
-                <ArrowDown className="w-4 h-4 text-brand-orange animate-bounce" />
+                <ArrowDown className="w-4 h-4 text-brand-red animate-bounce" />
               </button>
             </div>
 
@@ -291,8 +292,8 @@ export default function App() {
               {/* HUD Screen Footer */}
               <div className="z-10 bg-zinc-900/50 p-3 rounded-2xl border border-zinc-850 flex items-center justify-between">
                 <div>
-                  <p className="text-[8px] font-mono text-zinc-400 tracking-wider">AURA DEPLOYMENT STATUS</p>
-                  <p className="text-[10px] font-bold text-zinc-200">AURA-STAND CAP-43</p>
+                  <p className="text-[8px] font-mono text-zinc-400 tracking-wider">IRONPATH DEPLOYMENT STATUS</p>
+                  <p className="text-[10px] font-bold text-zinc-200">IRONPATH-STAND CAP-43</p>
                 </div>
                 <div className="h-2 w-2 rounded-full bg-brand-orange animate-pulse" />
               </div>
@@ -306,6 +307,9 @@ export default function App() {
         </div>
       </section>
 
+      {/* CSE 440 RESEARCH JOURNAL SECTION */}
+      <ResearchJournal />
+
       {/* SYNERGISTIC LOOP EXPLAINER */}
       <section id="how-it-works" className="py-24 bg-zinc-950 border-t border-b border-white/5 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -318,7 +322,7 @@ export default function App() {
               The Bio-Bluetooth Synergetic Loop
             </h2>
             <p className="text-sm text-zinc-400 max-w-2xl mx-auto">
-              How the combination of a clinical-grade Smart Shirt and the Aura Glass HUD computes accurate biomechanics on every rep.
+              How the combination of a clinical-grade Smart Shirt and the IronPath Glass HUD computes accurate biomechanics on every rep.
             </p>
           </div>
 
@@ -347,7 +351,7 @@ export default function App() {
               </div>
               <h3 className="text-lg font-bold text-white tracking-tight">The BLE Handshake</h3>
               <p className="text-xs text-zinc-400 leading-relaxed text-slate-300">
-                Turn on the Smart Core nape pod. Standard camera systems fail under shadows or fast workouts. The Aura Core hub broadcasts muscle expansion and thoracic orientation directly to the smart mirror, providing secondary absolute position layers.
+                Turn on the Smart Core nape pod. Standard camera systems fail under shadows or fast workouts. The IronPath Core hub broadcasts muscle expansion and thoracic orientation directly to the smart mirror, providing secondary absolute position layers.
               </p>
               <ul className="text-[10.5px] text-zinc-500 font-mono space-y-1 pt-2">
                 <li>• 2.4GHz Ultra-Low Latency Broadcast</li>
@@ -363,7 +367,7 @@ export default function App() {
               </div>
               <h3 className="text-lg font-bold text-white tracking-tight">The Reflection Audit</h3>
               <p className="text-xs text-zinc-400 leading-relaxed text-slate-300">
-                The Aura Glass Smart Mirror projects a high-contrast 3D skeletal frame matching your raw joints. Kinetic faults turn immediately orange or red, warning you of spine misalignment, knee values, or improper bar paths in real-time.
+                The IronPath Glass Smart Mirror projects a high-contrast 3D skeletal frame matching your raw joints. Kinetic faults turn immediately orange or red, warning you of spine misalignment, knee values, or improper bar paths in real-time.
               </p>
               <ul className="text-[10.5px] text-zinc-500 font-mono space-y-1 pt-2">
                 <li>• Interactive HUD overlays on glass</li>
@@ -401,11 +405,11 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-3 mb-16">
-            <span className="text-xs font-mono font-bold tracking-widest text-brand-orange uppercase block">
+            <span className="text-xs font-mono font-bold tracking-widest text-brand-red uppercase block">
               WEARABLE HARDWARE BIO-ANALYSIS
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Aura Aeroweave™ Biometic Shirt
+              IronPath Aeroweave™ Biometric Shirt
             </h2>
             <p className="text-sm text-zinc-400 max-w-xl mx-auto">
               Tap the glowing hotspots across the compression wear to discover specs and trace real-time live-updating oscillographic signals.
@@ -424,8 +428,8 @@ export default function App() {
           
           {/* Dashboard description (5 cols) */}
           <div className="lg:col-span-5 space-y-6 text-left">
-            <span className="text-xs font-mono font-bold tracking-widest text-brand-orange uppercase block">
-              STALLION ANALYTICAL ENGINE
+            <span className="text-xs font-mono font-bold tracking-widest text-brand-red uppercase block">
+              IRONPATH ANALYTICAL ENGINE
             </span>
             <h2 className="text-3xl font-black text-white tracking-tight leading-tight">
               Biomechanical Session Analytics
@@ -436,7 +440,7 @@ export default function App() {
 
             <div className="space-y-4 font-sans text-xs">
               <div className="flex gap-3 hover:bg-zinc-900/40 p-2.5 rounded-xl transition-all">
-                <span className="font-mono text-xs font-bold text-brand-orange bg-brand-orange/15 rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
+                <span className="font-mono text-xs font-bold text-brand-red bg-brand-red/15 rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0">
                   1
                 </span>
                 <div>
@@ -467,14 +471,14 @@ export default function App() {
             </div>
 
             <div className="pt-2 flex items-center gap-3">
-              <Smartphone className="w-5 h-5 text-brand-orange animate-pulse" />
+              <Smartphone className="w-5 h-5 text-brand-red animate-pulse" />
               <span className="text-xs text-zinc-400 font-mono">Mobile Companion available for iOS and Android.</span>
             </div>
           </div>
 
           {/* Graphic Dashboard (7 cols) */}
           <div className="lg:col-span-7 bg-zinc-900/40 border border-white/5 p-6 sm:p-8 rounded-lg relative overflow-hidden backdrop-blur-sm space-y-6">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-orange/10 to-transparent blur-2xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-brand-red/10 to-transparent blur-2xl pointer-events-none" />
             
             {/* Header stats dashboard */}
             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-zinc-800 pb-4">
@@ -501,7 +505,7 @@ export default function App() {
               {/* Box 2 */}
               <div className="p-3 bg-zinc-950/40 border border-white/5 rounded-lg space-y-1">
                 <span className="text-[9px] text-zinc-400 font-mono block">SPINE DEVIATION LIMIT</span>
-                <span className="text-lg font-black text-brand-orange font-sans block">{"<"} 2.8° Max</span>
+                <span className="text-lg font-black text-brand-red font-sans block">{"<"} 2.8° Max</span>
                 <p className="text-[10px] text-zinc-500 leading-normal text-slate-400">Lumbar and neck lines perfectly aligned during load transitions.</p>
               </div>
 
@@ -518,7 +522,7 @@ export default function App() {
             <div className="p-4 bg-zinc-950/50 rounded-lg border border-white/5 space-y-3.5">
               <div className="flex justify-between items-baseline">
                 <span className="text-[9px] text-zinc-400 font-mono tracking-widest block font-medium uppercase">REPS KINETICS PATH INDEX (SQUAT)</span>
-                <span className="text-[9px] text-brand-orange font-mono pl-2 block leading-none font-bold">REPS 1 TO 12 METERS</span>
+                <span className="text-[9px] text-brand-red font-mono pl-2 block leading-none font-bold">REPS 1 TO 12 METERS</span>
               </div>
 
               <div className="h-[120px] w-full flex items-end justify-between px-2 gap-1 relative overflow-hidden">
@@ -534,13 +538,13 @@ export default function App() {
                 {[98, 97, 96, 98, 99, 95, 96, 94, 91, 95, 93, 89].map((val, idx) => (
                   <div key={idx} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end z-10 group">
                     {/* Hover detail */}
-                    <div className="opacity-0 group-hover:opacity-100 absolute bottom-16 bg-[#050505] text-brand-orange border border-zinc-805 rounded px-2 py-0.5 text-[9px] font-mono transition-opacity pointer-events-none select-none z-20">
+                    <div className="opacity-0 group-hover:opacity-100 absolute bottom-16 bg-[#050505] text-brand-red border border-zinc-805 rounded px-2 py-0.5 text-[9px] font-mono transition-opacity pointer-events-none select-none z-20">
                       R{idx+1}: {val}%
                     </div>
                     {/* Bar stack */}
                     <div 
                       className={`w-full rounded-t-sm transition-all duration-300 ${
-                        val > 95 ? 'bg-brand-orange' : val > 90 ? 'bg-brand-blue' : 'bg-brand-red'
+                        val > 95 ? 'bg-brand-red' : val > 90 ? 'bg-brand-blue' : 'bg-zinc-700'
                       }`}
                       style={{ height: `${val}%` }}
                     />
@@ -566,14 +570,14 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-3 mb-16">
-            <span className="text-xs font-mono font-bold tracking-widest text-brand-orange uppercase block">
+            <span className="text-xs font-mono font-bold tracking-widest text-brand-red uppercase block">
               ATHLETE VERIFICATION
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans">
               Tested Under Heavy Steel loads
             </h2>
             <p className="text-sm text-zinc-400 max-w-xl mx-auto">
-              Read how competing weightlifters and physical science pros employ the Aura Smart Mirror to audit posture patterns.
+              Read how competing weightlifters and physical science pros employ the IronPath Smart Mirror to audit posture patterns.
             </p>
           </div>
 
@@ -612,11 +616,11 @@ export default function App() {
       <section className="py-24 max-w-4xl mx-auto px-4 sm:px-6">
         
         <div className="text-center space-y-3 mb-16">
-          <span className="text-xs font-mono font-bold tracking-widest text-brand-orange uppercase block">
+          <span className="text-xs font-mono font-bold tracking-widest text-brand-red uppercase block">
             INTEL & SPEC FAQ
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Have Questions about Aura?
+            Have Questions about IronPath?
           </h2>
           <p className="text-sm text-zinc-400">
             Learn more about washing smart yarn, Bluetooth latencies, and setup allocations.
@@ -636,7 +640,7 @@ export default function App() {
                   className="cursor-pointer w-full text-left p-5 flex justify-between items-center text-zinc-200 hover:text-white font-medium"
                 >
                   <span className="text-sm font-semibold tracking-tight">{faq.question}</span>
-                  <ChevronRight className={`w-4 h-4 text-brand-orange transition-transform duration-300 ${isOpen ? 'rotate-90' : 'rotate-0'}`} />
+                  <ChevronRight className={`w-4 h-4 text-brand-red transition-transform duration-300 ${isOpen ? 'rotate-90' : 'rotate-0'}`} />
                 </button>
                 
                 <AnimatePresence initial={false}>
@@ -665,11 +669,11 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-3 mb-16">
-            <span className="text-xs font-mono font-bold tracking-widest text-brand-orange uppercase block animate-pulse">
+            <span className="text-xs font-mono font-bold tracking-widest text-brand-red uppercase block animate-pulse">
               LIMITED PIONEER INVITATION BATCH
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans">
-              Build Your Private Aura Lab
+              Build Your Private IronPath Lab
             </h2>
             <p className="text-sm text-zinc-400 max-w-xl mx-auto">
               Reserve your smart mirror display and configure custom compression garments sizes for early-batch delivery.
@@ -687,11 +691,8 @@ export default function App() {
         
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
           
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center">
-              <Dumbbell className="w-4 h-4 text-brand-orange" />
-            </div>
-            <span className="font-extrabold text-[#fff]">AURA ATHLETICS LAB</span>
+          <div onClick={() => scrollToSection('hero')} className="cursor-pointer">
+            <IronPathLogo size="sm" />
           </div>
 
           <div className="flex gap-6 text-zinc-400 text-[11px]">
@@ -705,7 +706,7 @@ export default function App() {
           </div>
 
           <div>
-            <p>© 2026 Aura Athletic Systems. All rights reserved.</p>
+            <p>© 2026 IronPath Athletic Systems. All rights reserved.</p>
           </div>
 
         </div>

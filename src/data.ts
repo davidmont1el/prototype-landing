@@ -278,13 +278,111 @@ export const EXERCISES: Exercise[] = [
         rightAnkle: { x: 115, y: 220 }
       };
     }
+  },
+  {
+    id: 'deadlift',
+    name: 'Barbell Deadlift',
+    category: 'Lower Body',
+    jointTarget: 'Hip Hinge & Spine Flexion',
+    idealAngleRange: 'Straight Spine, Active Hinge (15° - 45° Torso Tilt)',
+    activeSensors: ['Spine Straightness Strain', 'Hip Leverage Center', 'Glute Conduction Tension'],
+    instructions: [
+      'Stand with feet hip-width apart, barbell resting over mid-foot.',
+      'Hinge at hips, bending knees slightly, and grip bar outside of shins.',
+      'Flatten your spine fully, pulling chest up to lift slack out of the barbell.',
+      'Drive feet hard into floor, keeping bar close, and extend hips to lock out.'
+    ],
+    deviations: {
+      lowLabel: 'Excessive Forward Lean',
+      highLabel: 'Lumbar Flexion (Barbell Round Back)',
+      lowFeedback: 'Knees drifted forward past toes excessively. Sit your hips slightly back and down to stack shins vertically.',
+      highFeedback: 'Dangerous lower spine rounding detected. Hinge deeply, engage lat muscles, and pull chest up to pull barbell slack.',
+      perfectFeedback: 'Pristine rigid neutral spine. Hinge angle has beautiful leverage control. Stand with powerful hip extension.'
+    },
+    getDefaultRig: (completion: number, deviation: number) => {
+      // 0 = Lockout standing upright, 100 = Bottom bar on floor
+      const t = completion / 100;
+      const baseX = 100;
+      
+      let headY = 35 + t * 45;
+      let headX = baseX + t * 16;
+      let neckY = 55 + t * 42;
+      let neckX = baseX + t * 14;
+      let spineY = 95 + t * 25;
+      let spineX = baseX - t * 15;
+      
+      // If deviation > 0 (rounding back in deadlift)
+      if (deviation > 0) {
+        const factor = (deviation / 50) * t;
+        spineX -= factor * 14; // curve back outward
+        headX += factor * 8;
+        neckX += factor * 6;
+      }
+      
+      // Left/Right Hips shift back and down
+      let hipY = 135 + t * 15;
+      let leftHipX = 85 - t * 18;
+      let rightHipX = 115 - t * 18;
+      
+      // Keeping it balanced:
+      let leftKneeX = 82 - t * 2;
+      let leftKneeY = 175 + t * 10;
+      let rightKneeX = 118 - t * 2;
+      let rightKneeY = 175 + t * 10;
+      
+      // If deviation < 0 (Forward Lean / Knees past toes too much)
+      if (deviation < 0) {
+        const factor = (Math.abs(deviation) / 50) * t;
+        leftKneeX += factor * 12; // knee drift forward
+        rightKneeX += factor * 12;
+      }
+      
+      const leftAnkleX = 80;
+      const leftAnkleY = 220;
+      const rightAnkleX = 120;
+      const rightAnkleY = 220;
+      
+      // Wrists reach down holding bar
+      let leftShoulderX = 82 + t * 14;
+      let leftShoulderY = 65 + t * 35;
+      let rightShoulderX = 118 + t * 14;
+      let rightShoulderY = 65 + t * 35;
+      
+      let leftElbowX = 78 + t * 16;
+      let leftElbowY = 95 + t * 32;
+      let rightElbowX = 122 + t * 12;
+      let rightElbowY = 95 + t * 32;
+      
+      let leftWristX = 78 + t * 18;
+      let leftWristY = 120 + t * 35;
+      let rightWristX = 122 + t * 14;
+      let rightWristY = 120 + t * 35;
+      
+      return {
+        head: { x: headX, y: headY },
+        neck: { x: neckX, y: neckY },
+        leftShoulder: { x: leftShoulderX, y: leftShoulderY },
+        rightShoulder: { x: rightShoulderX, y: rightShoulderY },
+        leftElbow: { x: leftElbowX, y: leftElbowY },
+        rightElbow: { x: rightElbowX, y: rightElbowY },
+        leftWrist: { x: leftWristX, y: leftWristY },
+        rightWrist: { x: rightWristX, y: rightWristY },
+        spine: { x: spineX, y: spineY },
+        leftHip: { x: leftHipX, y: hipY },
+        rightHip: { x: rightHipX, y: hipY },
+        leftKnee: { x: leftKneeX, y: leftKneeY },
+        rightKnee: { x: rightKneeX, y: rightKneeY },
+        leftAnkle: { x: leftAnkleX, y: leftAnkleY },
+        rightAnkle: { x: rightAnkleX, y: rightAnkleY }
+      };
+    }
   }
 ];
 
 export const SENSOR_HOTSPOTS: SensorHotspot[] = [
   {
     id: 'chest-ecg',
-    title: 'Aura Bio-Conduction Fibers',
+    title: 'IronPath Bio-Conduction Fibers',
     subtitle: 'Integrated ECG Mesh',
     x: 50,
     y: 28,
@@ -317,7 +415,7 @@ export const SENSOR_HOTSPOTS: SensorHotspot[] = [
   },
   {
     id: 'nape-pod',
-    title: 'Aura Core Hub',
+    title: 'IronPath Core Hub',
     subtitle: 'Zero-Latency Bluetooth Nodule',
     x: 50,
     y: 12,
@@ -334,7 +432,7 @@ export const RECENT_TESTIMONIALS: Testimonial[] = [
     author: 'Elena Rostova',
     role: 'Olympic Weightlifting Competitor',
     rating: 5,
-    comment: 'The precision is terrifying. For a long time, my left shin was tracking inward during cleans, and no trainer caught it. Aura flagged the 4° knee drift on rep two, and I broke my squat record in 4 weeks.',
+    comment: 'The precision is terrifying. For a long time, my left shin was tracking inward during cleans, and no trainer caught it. IronPath flagged the 4° knee drift on rep two, and I broke my squat record in 4 weeks.',
     avatarUrl: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=150&h=150'
   },
   {
@@ -342,7 +440,7 @@ export const RECENT_TESTIMONIALS: Testimonial[] = [
     author: 'Dr. Marcus Vance',
     role: 'Physical Therapy Lead / Sports Scientist',
     rating: 5,
-    comment: 'Wearable systems are usually hindered by wrist placement or bad calculations. Coupling the high-fidelity biomechanical data from the Aura Smart Shirt with the visual feedback of the Mirror solves the feedback loop.',
+    comment: 'Wearable systems are usually hindered by wrist placement or bad calculations. Coupling the high-fidelity biomechanical data from the IronPath Smart Shirt with the visual feedback of the Mirror solves the feedback loop.',
     avatarUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=150&h=150'
   }
 ];
@@ -350,14 +448,14 @@ export const RECENT_TESTIMONIALS: Testimonial[] = [
 export const FAQS = [
   {
     question: "Do I have to look directly in the Mirror for stats to register?",
-    answer: "No. While the mirror provides breathtaking visual real-time feedback and skeleton overlay, your Aura Smart Shirt contains internal memory. It records and synchronizes all biometric data and form vectors to your smartphone or mirror dashboard locally."
+    answer: "No. While the mirror provides breathtaking visual real-time feedback and skeleton overlay, your IronPath Smart Shirt contains internal memory. It records and synchronizes all biometric data and form vectors to your smartphone or mirror dashboard locally."
   },
   {
-    question: "How do I wash the Aura Smart Bio-Mesh Shirt?",
-    answer: "Remove the magnetic Aura Core Hub from the nape of the neck. The shirt itself can go directly into typical washing machines and warm tumble driers — our silver ECG fibers and IMUs are integrated at a molecular yarn level."
+    question: "How do I wash the IronPath Smart Bio-Mesh Shirt?",
+    answer: "Remove the magnetic IronPath Core Hub from the nape of the neck. The shirt itself can go directly into typical washing machines and warm tumble driers — our silver ECG fibers and IMUs are integrated at a molecular yarn level."
   },
   {
     question: "Does this require a subscription fees or hidden costs?",
-    answer: "Aura operates with a hardware-inclusive dashboard. Every purchase comes with lifetime access to standard real-time biometric mirroring and personal stat dashboards. Optional Pro Live Coaching is available but never required for core features."
+    answer: "IronPath operates with a hardware-inclusive dashboard. Every purchase comes with lifetime access to standard real-time biometric mirroring and personal stat dashboards. Optional Pro Live Coaching is available but never required for core features."
   }
 ];

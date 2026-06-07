@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EXERCISES } from '../data';
 import { SkeletonRig, Exercise } from '../types';
-import { Activity, Zap, Cpu, Bluetooth, AlertTriangle, Sparkles, CheckCircle, Flame } from 'lucide-react';
+import { Activity, Zap, Cpu, Bluetooth, AlertTriangle, Sparkles, CheckCircle, Flame, Dumbbell } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function SmartMirror() {
@@ -30,9 +30,9 @@ export default function SmartMirror() {
     } else if (deviation < 0) {
       return {
         label: 'FORM DEFLECTION L',
-        color: 'text-brand-orange border-brand-orange/30 bg-brand-orange/10',
-        lineColor: '#f97316',
-        glowClass: 'shadow-[0_0_15px_rgba(249,115,22,0.3)]',
+        color: 'text-brand-red border-brand-red/30 bg-brand-red/10',
+        lineColor: '#d11212',
+        glowClass: 'shadow-[0_0_15px_rgba(209,18,18,0.3)]',
         msg: activeExercise.deviations.lowFeedback,
         precision: Math.max(45, 85 - Math.abs(deviation) * 0.8)
       };
@@ -40,8 +40,8 @@ export default function SmartMirror() {
       return {
         label: 'FORM DISPLACEMENT R',
         color: 'text-brand-red border-brand-red/30 bg-brand-red/10',
-        lineColor: '#ef4444',
-        glowClass: 'shadow-[0_0_15px_rgba(239,68,68,0.3)]',
+        lineColor: '#d11212',
+        glowClass: 'shadow-[0_0_15px_rgba(209,18,18,0.3)]',
         msg: activeExercise.deviations.highFeedback,
         precision: Math.max(38, 80 - Math.abs(deviation) * 0.9)
       };
@@ -362,7 +362,7 @@ export default function SmartMirror() {
           </div>
 
           {/* Exercise Selector Grid */}
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {EXERCISES.map((ex) => (
               <button
                 key={ex.id}
@@ -381,6 +381,7 @@ export default function SmartMirror() {
                   {ex.id === 'squat' && <Flame className="w-4 h-4" />}
                   {ex.id === 'curl' && <Activity className="w-4 h-4" />}
                   {ex.id === 'press' && <Cpu className="w-4 h-4" />}
+                  {ex.id === 'deadlift' && <Dumbbell className="w-4 h-4" />}
                 </div>
                 <span className="text-[10px] font-bold tracking-tight uppercase leading-none block">{ex.name.split(' ').slice(-1)[0]}</span>
                 <span className="text-[8px] text-zinc-500 font-mono mt-0.5">{ex.category}</span>

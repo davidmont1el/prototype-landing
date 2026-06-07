@@ -77,7 +77,7 @@ export default function SmartShirt() {
                 <stop offset="100%" stopColor="#020617" stopOpacity="1" />
               </linearGradient>
               <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#f97316" stopOpacity="0.7" />
+                <stop offset="0%" stopColor="#d11212" stopOpacity="0.7" />
                 <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
               </linearGradient>
             </defs>
@@ -113,9 +113,9 @@ export default function SmartShirt() {
             {/* Collar lining stitch */}
             <path d="M 32,8 C 38,10 42,12 60,12 C 78,12 82,10 88,8" fill="none" stroke="#475569" strokeWidth="1" />
 
-            {/* Aura Logo Emblem on Chest */}
-            <circle cx="60" cy="22" r="3.2" fill="none" stroke="#f97316" strokeWidth="1" className="animate-pulse" />
-            <polygon points="60,20 62.5,23.5 57.5,23.5" fill="#f97316" opacity="0.8" />
+            {/* IronPath Logo Emblem on Chest */}
+            <circle cx="60" cy="22" r="3.2" fill="none" stroke="#d11212" strokeWidth="1" className="animate-pulse" />
+            <polygon points="60,20 62.5,23.5 57.5,23.5" fill="#d11212" opacity="0.8" />
           </svg>
 
           {/* SENSOR HOTSPOTS LAYER: Overlay buttons on top of SVG */}
@@ -129,18 +129,18 @@ export default function SmartShirt() {
                 className={`cursor-pointer absolute -translate-x-1/2 -translate-y-1/2 z-20 group`}
               >
                 {/* Expanding pulse animation */}
-                <span className={`absolute inset-0 rounded-full scale-100 opacity-75 group-hover:bg-brand-orange/35 transition-all duration-300 ${
-                  isActive ? 'animate-ping bg-brand-orange/40 w-8 h-8 -left-2 -top-2' : 'w-4 h-4'
+                <span className={`absolute inset-0 rounded-full scale-100 opacity-75 group-hover:bg-brand-red/35 transition-all duration-300 ${
+                  isActive ? 'animate-ping bg-brand-red/40 w-8 h-8 -left-2 -top-2' : 'w-4 h-4'
                 }`} />
                 
                 {/* Inner core node dot */}
                 <span className={`flex items-center justify-center transition-all duration-300 rounded-full border ${
                   isActive
-                    ? 'w-6 h-6 border-brand-orange bg-zinc-950 text-brand-orange hover:scale-105'
-                    : 'w-4.5 h-4.5 border-zinc-500 bg-zinc-800 text-zinc-300 group-hover:border-brand-orange'
+                    ? 'w-6 h-6 border-brand-red bg-zinc-950 text-brand-red hover:scale-105'
+                    : 'w-4.5 h-4.5 border-zinc-500 bg-zinc-800 text-zinc-300 group-hover:border-brand-red'
                 }`}>
                   <span className={`rounded-full transition-colors ${
-                    isActive ? 'w-2 h-2 bg-brand-orange shadow-[0_0_8px_#f97316]' : 'w-1.5 h-1.5 bg-zinc-400 group-hover:bg-brand-orange'
+                    isActive ? 'w-2 h-2 bg-brand-red shadow-[0_0_8px_#d11212]' : 'w-1.5 h-1.5 bg-zinc-400 group-hover:bg-brand-red'
                   }`} />
                 </span>
                 
@@ -163,7 +163,7 @@ export default function SmartShirt() {
           <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
             <div>
               <div className="flex items-center gap-1.5 font-sans">
-                <span className="text-[10px] font-mono font-bold text-brand-orange uppercase tracking-widest bg-brand-orange/10 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono font-bold text-brand-red uppercase tracking-widest bg-brand-red/10 px-2 py-0.5 rounded">
                   {activeHotspot.signalFreq}
                 </span>
                 <span className="flex items-center gap-1 text-[10px] text-brand-green font-mono uppercase bg-brand-green/10 px-2 py-0.5 rounded">
@@ -175,10 +175,10 @@ export default function SmartShirt() {
             </div>
 
             <div className="p-2.5 rounded-lg bg-zinc-950/50 border border-white/5 text-zinc-400">
-              {activeHotspotId === 'chest-ecg' && <Waves className="w-6 h-6 text-brand-orange animate-pulse" />}
-              {activeHotspotId === 'back-imu' && <Cpu className="w-6 h-6 text-brand-orange" />}
-              {activeHotspotId === 'lats-respiration' && <ShieldCheck className="w-6 h-6 text-brand-orange" />}
-              {activeHotspotId === 'nape-pod' && <Workflow className="w-6 h-6 text-brand-orange" />}
+              {activeHotspotId === 'chest-ecg' && <Waves className="w-6 h-6 text-brand-red animate-pulse" />}
+              {activeHotspotId === 'back-imu' && <Cpu className="w-6 h-6 text-brand-red" />}
+              {activeHotspotId === 'lats-respiration' && <ShieldCheck className="w-6 h-6 text-brand-red" />}
+              {activeHotspotId === 'nape-pod' && <Workflow className="w-6 h-6 text-brand-red" />}
             </div>
           </div>
 
@@ -195,7 +195,7 @@ export default function SmartShirt() {
                 <path
                   d={wavePath}
                   fill="none"
-                  stroke="#f97316"
+                  stroke="#d11212"
                   strokeWidth="2"
                   strokeLinecap="round"
                   className="transition-all duration-75 animate-pulse"
@@ -204,7 +204,7 @@ export default function SmartShirt() {
               
               {/* Overlay pulse details */}
               <div className="absolute right-3 top-2 flex items-center gap-1.5 bg-zinc-900/85 px-2 py-1 border border-zinc-800 rounded font-mono text-[9px] text-zinc-400">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse" />
                 <span>STREAM ACTIVE</span>
               </div>
             </div>
@@ -225,8 +225,8 @@ export default function SmartShirt() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 bg-brand-orange/5 border border-brand-orange/15 rounded-lg p-3">
-            <Sparkles className="w-4 h-4 text-brand-orange flex-shrink-0" />
+          <div className="flex items-center gap-2 bg-brand-red/5 border border-brand-red/15 rounded-lg p-3">
+            <Sparkles className="w-4 h-4 text-brand-red flex-shrink-0" />
             <p className="text-[11px] leading-relaxed text-zinc-300 font-sans">
               <strong className="text-white font-semibold">Form Integration:</strong> Synergizes raw metrics at {activeHotspot.signalFreq === 'Bluetooth LE' ? 'sub-millisecond' : activeHotspot.signalFreq} sync rates with the mirror skeletal model to verify {activeHotspot.metrics.join(', ')}.
             </p>
