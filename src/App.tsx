@@ -27,8 +27,8 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import SmartMirror from './components/SmartMirror';
 import SmartShirt from './components/SmartShirt';
-import PricingModel from './components/PricingModel';
 import ResearchJournal from './components/ResearchJournal';
+import PosterBrief from './components/PosterBrief';
 import IronPathLogo from './components/IronPathLogo';
 import { FAQS, RECENT_TESTIMONIALS } from './data';
 
@@ -77,7 +77,6 @@ export default function App() {
             <button onClick={() => scrollToSection('how-it-works')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">SYNERGY</button>
             <button onClick={() => scrollToSection('interactive-mirror')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">GLASS HUD</button>
             <button onClick={() => scrollToSection('smart-shirt')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">AEROWEAVE™</button>
-            <button onClick={() => scrollToSection('pricing')} className="cursor-pointer hover:text-brand-red hover:underline hover:underline-offset-4 transition-colors">RESERVE</button>
           </nav>
 
           {/* Desktop Right CTA */}
@@ -87,10 +86,10 @@ export default function App() {
               BETA ACCREDITED
             </span>
             <button 
-              onClick={() => scrollToSection('pricing')}
+              onClick={() => scrollToSection('design-archive')}
               className="cursor-pointer text-xs font-mono font-bold bg-brand-red hover:bg-[#b00e0e] text-white px-5 py-2.5 rounded-lg uppercase tracking-wider transition-all hover:scale-105 active:scale-95 duration-200 shadow-[0_0_15px_rgba(209,18,18,0.25)]"
             >
-              PRE-ORDER CORE
+              DESIGN ARCHIVE
             </button>
           </div>
 
@@ -119,7 +118,6 @@ export default function App() {
               <button onClick={() => scrollToSection('how-it-works')} className="text-zinc-300 hover:text-brand-red">Synergy Layout</button>
               <button onClick={() => scrollToSection('interactive-mirror')} className="text-zinc-300 hover:text-brand-red">Glass HUD</button>
               <button onClick={() => scrollToSection('smart-shirt')} className="text-zinc-300 hover:text-brand-red">Aeroweave™ Shirt</button>
-              <button onClick={() => scrollToSection('pricing')} className="text-zinc-300 hover:text-brand-red">Reserve Platform</button>
             </div>
             <div className="pt-4 border-t border-zinc-900 flex flex-col gap-4 items-center">
               <span className="text-xs text-brand-red flex items-center gap-1.5 justify-center font-bold">
@@ -127,10 +125,10 @@ export default function App() {
                 SYSTEM ENTRANCE LIVE
               </span>
               <button 
-                onClick={() => scrollToSection('pricing')}
+                onClick={() => scrollToSection('design-archive')}
                 className="w-full text-xs font-bold bg-brand-red text-white py-3 rounded-lg uppercase tracking-wider"
               >
-                PRE-ORDER SYSTEM
+                VIEW DESIGN DECK
               </button>
             </div>
           </motion.div>
@@ -201,10 +199,10 @@ export default function App() {
             {/* CTA Interaction Trigger block */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button 
-                onClick={() => scrollToSection('pricing')}
+                onClick={() => scrollToSection('design-archive')}
                 className="cursor-pointer text-center px-8 py-4 bg-brand-red hover:bg-[#b00e0e] text-white font-extrabold tracking-wide text-xs uppercase rounded-lg transition-all shadow-[0_0_20px_rgba(209,18,18,0.35)] hover:scale-105"
               >
-                SECURE PLATFORM RESERVATION
+                EXPLORE RESEARCH ARCHIVE
               </button>
               
               <button 
@@ -664,27 +662,9 @@ export default function App() {
 
       </section>
 
-      {/* PRICING & CUSTOMIZER SECTION */}
-      <section id="pricing" className="py-24 bg-zinc-950 border-t border-white/5 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center space-y-3 mb-16">
-            <span className="text-xs font-mono font-bold tracking-widest text-brand-red uppercase block animate-pulse">
-              LIMITED PIONEER INVITATION BATCH
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans">
-              Build Your Private IronPath Lab
-            </h2>
-            <p className="text-sm text-zinc-400 max-w-xl mx-auto">
-              Reserve your smart mirror display and configure custom compression garments sizes for early-batch delivery.
-            </p>
-          </div>
+      {/* PORTFOLIO POSTER BRIEF */}
+      <PosterBrief />
 
-          {/* Pricing component nested */}
-          <PricingModel />
-
-        </div>
-      </section>
 
       {/* FOOTER */}
       <footer className="border-t border-white/5 bg-[#050505] py-12 px-4 sm:px-6 lg:px-8 text-center text-zinc-500 font-mono text-xs select-none">
@@ -702,7 +682,7 @@ export default function App() {
             <span>•</span>
             <span className="hover:text-white cursor-pointer" onClick={() => scrollToSection('interactive-mirror')}>Mirror Demo</span>
             <span>•</span>
-            <span className="hover:text-white cursor-pointer" onClick={() => scrollToSection('pricing')}>Get Casing</span>
+            <span className="hover:text-white cursor-pointer" onClick={() => scrollToSection('poster-brief')}>Poster Thesis</span>
           </div>
 
           <div>
