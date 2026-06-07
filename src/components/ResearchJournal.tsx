@@ -742,7 +742,7 @@ export default function ResearchJournal() {
                       {/* Viewport frame containing the actual or generated image */}
                       <div className="aspect-[4/3] bg-zinc-950 rounded-lg border border-white/5 relative overflow-hidden flex items-center justify-center flex-grow">
                         <img 
-                          src="/src/assets/images/paper_prototype_1780805878415.png" 
+                          src={new URL('../assets/images/paper_prototype_1780805878415.png', import.meta.url).href} 
                           alt="Physical paper prototype of IronPath on turf showcasing T-shirt sensor nodes, card wearables, wireless earbud mock, and paper smartwatch dial next to cardboard mirror"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                           referrerPolicy="no-referrer"
