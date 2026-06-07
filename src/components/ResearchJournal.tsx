@@ -52,7 +52,8 @@ const VIDEO_CHAPTERS = [
     subtitle: 'Observing User Behavior',
     caption: '“I stopped once I felt it was roughly in the right area.” Out of dozens of lifters monitored at the UW IMA gym, zero corrected their own form in standard glass mirrors. Blind spots lead to micro-injuries that compound under fatigue.',
     visualText: 'OBSERVATIONS: 3 OF 3 LIFTERS FAILED TO SELF-CORRECT',
-    barHeights: [12, 18, 14, 25, 42, 60, 20, 10, 8]
+    barHeights: [12, 18, 14, 25, 42, 60, 20, 10, 8],
+    startSeconds: 0
   },
   {
     time: '0:35 - 1:12',
@@ -60,7 +61,8 @@ const VIDEO_CHAPTERS = [
     subtitle: 'Sensing Beyond Cameras',
     caption: 'By weaving silver bioconductive threads straight into the Aeroweave fabric, IronPath detects the precise contraction of muscle fibers and thoracic orientation. The Smart Hub nape pod transmits these vectors directly to the Mirror.',
     visualText: 'CONNECTING COMPRESSION GARMENT... HANDSHAKE ESTABLISHED',
-    barHeights: [45, 62, 50, 75, 90, 85, 60, 48, 55]
+    barHeights: [45, 62, 50, 75, 90, 85, 60, 48, 55],
+    startSeconds: 35
   },
   {
     time: '1:13 - 1:50',
@@ -68,7 +70,8 @@ const VIDEO_CHAPTERS = [
     subtitle: 'Translating Cues to Sensation',
     caption: 'Standard coaches yell generic advice. IronPath earbuds deliver specific corrective cues: “Forward lean detected. Pull chest up, sit back.” Earbuds beep instantly the micro-second a dangerous spine rounding or knee cave is registered.',
     visualText: 'ALERT CUE: "CHEST UP" • HAPTIC TRIGGER STAGE ONE',
-    barHeights: [80, 20, 95, 30, 85, 25, 90, 42, 70]
+    barHeights: [80, 20, 95, 30, 85, 25, 90, 42, 70],
+    startSeconds: 73
   },
   {
     time: '1:51 - 2:20',
@@ -76,7 +79,8 @@ const VIDEO_CHAPTERS = [
     subtitle: 'Autonomous Session Logs',
     caption: 'No notebooks, no manuals. Your session metrics auto-push to the companion app. Progress is tracked not just by weight on the bar, but by your Form Quality index — averaging 92/100, letting you train with confidence.',
     visualText: 'VOLUME EXCEL: 190 LBS (+20 LBS GAIN IN 4 WEEKS)',
-    barHeights: [15, 32, 28, 45, 52, 60, 68, 75, 85]
+    barHeights: [15, 32, 28, 45, 52, 60, 68, 75, 85],
+    startSeconds: 111
   }
 ];
 
@@ -85,6 +89,7 @@ export default function ResearchJournal() {
   const [activeChapter, setActiveChapter] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [videoMode, setVideoMode] = useState<'real' | 'simulated'>('real');
   const [activeTab, setActiveTab] = useState<'problem' | 'solution' | 'storyboard' | 'process' | 'team'>('problem');
 
   // Interactive audio buzz simulation
@@ -358,11 +363,11 @@ export default function ResearchJournal() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch"
             >
               
               {/* Left Column: Explainer and slide selectors */}
-              <div className="lg:col-span-5 text-left space-y-6">
+              <div className="lg:col-span-5 text-left space-y-6 flex flex-col justify-between">
                 <div>
                   <span className="text-[10px] font-mono font-bold text-brand-red uppercase tracking-widest bg-brand-red/10 px-2.5 py-1 rounded-full border border-brand-red/25 inline-block mb-2">
                     03. EMBEDDED PITCH VIDEO CONCEPT
@@ -401,84 +406,181 @@ export default function ResearchJournal() {
                     );
                   })}
                 </div>
+
+                <p className="text-[10.5px] text-zinc-500 font-mono italic text-center p-2 bg-[#0e0e11] rounded-lg border border-white/5">
+                  💡 Select a chapter to jump to that timestamp in the video
+                </p>
               </div>
 
               {/* Right Column: Custom Video Frame Mockup */}
-              <div className="lg:col-span-7">
-                <div className="p-4 bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden group">
+              <div className="lg:col-span-7 flex flex-col justify-between">
+                <div className="p-4 bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl relative overflow-hidden group flex-grow flex flex-col justify-between">
                   
                   {/* Decorative ambient flare */}
                   <div className="absolute top-0 left-0 w-36 h-36 bg-gradient-to-br from-brand-red/15 to-transparent blur-xl" />
                   
-                  {/* Simulated Cinematic Screen */}
-                  <div className="aspect-[16/10] bg-[#0c0c0e] rounded-xl border border-white/5 relative flex flex-col justify-between overflow-hidden">
+                  {/* Switcher Bar inside high fidelity frame */}
+                  <div className="mb-4 flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-white/5 pb-3 z-10 relative">
+                    <div className="text-left">
+                      <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-400 uppercase block">CONCEPT VIEWING MODULE</span>
+                      <span className="text-[9px] font-mono text-zinc-500">Video ID: 8dMbElo1GTA</span>
+                    </div>
                     
-                    {/* Top status bar */}
-                    <div className="z-10 p-3 bg-zinc-950/80 backdrop-blur-md border-b border-white/5 text-[9px] font-mono flex justify-between text-zinc-500 select-none">
-                      <span className="flex items-center gap-1">
-                        <span className={`w-1.5 h-1.5 rounded-full ${isPlaying ? 'bg-brand-red animate-pulse' : 'bg-zinc-650'}`} />
-                        CAP: CONCEPT_PITCH_STORYBOARD.RAW
-                      </span>
-                      <span>UW CSE 440 • SPRING 2026</span>
-                    </div>
-
-                    {/* Interactive Simulation Frame Content */}
-                    <div className="flex-grow flex flex-col items-center justify-center p-6 relative">
-                      
-                      {/* Active chapter text animation background */}
-                      <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-zinc-900/70 border border-white/5 px-3 py-1 rounded font-mono text-[9px] text-brand-red uppercase tracking-wider select-none font-bold">
-                        {VIDEO_CHAPTERS[activeChapter].visualText}
-                      </div>
-
-                      {/* Moving Equalizer or audio pulse to signify play speed */}
-                      <div className="flex items-center gap-1.5 h-14 justify-center">
-                        {VIDEO_CHAPTERS[activeChapter].barHeights.map((h, i) => (
-                          <div 
-                            key={i} 
-                            className="w-1 rounded-full bg-gradient-to-t from-brand-red to-zinc-500 transition-all duration-300"
-                            style={{ 
-                              height: isPlaying ? `${Math.max(10, h * (1 + Math.sin(Date.now() / 400 + i) * 0.15))}%` : '8px'
-                            }}
-                          />
-                        ))}
-                      </div>
-
-                      {/* Large Action play/pause symbol overlay */}
+                    <div className="flex bg-[#0e0e11] p-1 rounded-lg border border-white/5 shrink-0">
                       <button 
-                        onClick={handlePlayToggle}
-                        className="mt-4 w-10 h-10 rounded-full bg-brand-red hover:bg-[#b00e0e] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-md z-15 cursor-pointer animate-pulse"
+                        onClick={() => setVideoMode('real')}
+                        className={`px-3 py-1.5 text-[9px] font-mono font-bold rounded-md transition-all cursor-pointer ${
+                          videoMode === 'real' 
+                            ? 'bg-brand-red text-white font-extrabold shadow-sm' 
+                            : 'text-zinc-400 hover:text-white'
+                        }`}
                       >
-                        {isPlaying ? <Pause className="w-4 h-4 fill-current text-white" /> : <Play className="w-4 h-4 fill-current text-white ml-0.5" />}
+                        🎥 HD EMBEDDED SHORT
                       </button>
-
+                      <button 
+                        onClick={() => setVideoMode('simulated')}
+                        className={`px-3 py-1.5 text-[9px] font-mono font-bold rounded-md transition-all cursor-pointer ${
+                          videoMode === 'simulated' 
+                            ? 'bg-brand-red text-white font-extrabold shadow-sm' 
+                            : 'text-zinc-400 hover:text-white'
+                        }`}
+                      >
+                        📊 AUDIO GRAPH SIMULATOR
+                      </button>
                     </div>
-
-                    {/* Caption Overlaid Block (mimics video subtitles) */}
-                    <div className="z-10 p-4 bg-zinc-950/90 border-t border-white/5 text-left space-y-1">
-                      <span className="text-[8px] font-mono text-zinc-500 uppercase font-bold tracking-widest block">NARRATOR AUDIO CUE:</span>
-                      <p className="text-[11px] leading-relaxed text-zinc-300 font-sans italic">
-                        {VIDEO_CHAPTERS[activeChapter].caption}
-                      </p>
-                    </div>
-
                   </div>
 
-                  {/* Player control footer */}
-                  <div className="flex items-center justify-between text-zinc-500 font-mono text-[10px] mt-4 pt-1 select-none">
-                    <div className="flex items-center gap-4">
-                      <button onClick={handlePlayToggle} className="text-zinc-300 hover:text-brand-red cursor-pointer">
-                        {isPlaying ? 'PAUSE' : 'PLAY'}
-                      </button>
-                      <span>TRACK CH-0{activeChapter + 1}</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-4">
-                      <button onClick={handleMuteToggle} className="text-zinc-400 hover:text-white flex items-center gap-1 cursor-pointer">
-                        {isMuted ? <VolumeX className="w-3.5 h-3.5 text-brand-red" /> : <Volume2 className="w-3.5 h-3.5 text-zinc-400" />}
-                        <span>{isMuted ? 'UNMUTE_SYSTEM_AUDIO' : 'MUTE'}</span>
-                      </button>
-                      <span className="text-zinc-400">{VIDEO_CHAPTERS[activeChapter].time}</span>
-                    </div>
+                  <AnimatePresence mode="wait">
+                    {videoMode === 'real' ? (
+                      <motion.div 
+                        key="real-video"
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex-grow flex flex-col items-center justify-center py-4 z-10 relative"
+                      >
+                        {/* High-fidelity mockup smartphone shell to embed YouTube Short natively (vertical 9:16) */}
+                        <div className="mx-auto w-full max-w-[270px] sm:max-w-[290px] aspect-[9/18.3] bg-[#0c0c0f] p-3 rounded-[2.5rem] shadow-2xl border border-zinc-800 relative ring-4 ring-zinc-900/40">
+                          
+                          {/* Hardware Notch / Speaker Earbar */}
+                          <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-20 h-4 bg-zinc-950 rounded-full z-30 flex items-center justify-center border border-zinc-900">
+                            <div className="w-8 h-1 bg-zinc-800 rounded-full" />
+                          </div>
+
+                          {/* Top Bezel Status Indicator Icons */}
+                          <div className="absolute top-5 inset-x-8 px-2 flex justify-between items-center text-[7px] font-mono text-zinc-500 z-30 pointer-events-none">
+                            <span>LTE</span>
+                            <span>7:43 PM</span>
+                            <span>100% 🔋</span>
+                          </div>
+
+                          {/* Dynamic Iframe Screen Shell */}
+                          <div className="w-full h-full bg-[#050508] relative rounded-[2rem] overflow-hidden border border-white/5 shadow-inner">
+                            {/* Reflex highlight effect overlay */}
+                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/2 to-transparent rotate-12 z-20" />
+                            
+                            <iframe
+                              key={VIDEO_CHAPTERS[activeChapter].startSeconds}
+                              src={`https://www.youtube.com/embed/8dMbElo1GTA?start=${VIDEO_CHAPTERS[activeChapter].startSeconds}&autoplay=1&mute=1&rel=0&modestbranding=1&controls=1&showinfo=0`}
+                              title="IronPath Concept Pitch Video"
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowFullScreen
+                              className="w-full h-full rounded-[2rem]"
+                            />
+                          </div>
+
+                        </div>
+
+                        {/* Interactive Chapter Indicator Banner */}
+                        <div className="mt-4 bg-zinc-900/60 border border-white/5 py-1.5 px-3 rounded-lg font-mono text-[9.5px] text-brand-red flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-ping" />
+                          <span>SYNCHRONIZED AT {VIDEO_CHAPTERS[activeChapter].time}</span>
+                        </div>
+
+                      </motion.div>
+                    ) : (
+                      <motion.div 
+                        key="simulated-pulse"
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex-grow flex flex-col justify-between"
+                      >
+                        {/* Simulated Cinematic Screen */}
+                        <div className="aspect-[16/10] bg-[#0c0c0e] rounded-xl border border-white/5 relative flex flex-col justify-between overflow-hidden z-10">
+                          
+                          {/* Top status bar */}
+                          <div className="z-10 p-3 bg-zinc-950/80 backdrop-blur-md border-b border-white/5 text-[9px] font-mono flex justify-between text-zinc-500 select-none">
+                            <span className="flex items-center gap-1">
+                              <span className={`w-1.5 h-1.5 rounded-full ${isPlaying ? 'bg-brand-red animate-pulse' : 'bg-zinc-650'}`} />
+                              CAP: CONCEPT_PITCH_STORYBOARD.RAW
+                            </span>
+                            <span>UW CSE 440 • SPRING 2026</span>
+                          </div>
+
+                          {/* Interactive Simulation Frame Content */}
+                          <div className="flex-grow flex flex-col items-center justify-center p-6 relative">
+                            
+                            {/* Active chapter text animation background */}
+                            <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-zinc-900/70 border border-white/5 px-3 py-1 rounded font-mono text-[9px] text-brand-red uppercase tracking-wider select-none font-bold">
+                              {VIDEO_CHAPTERS[activeChapter].visualText}
+                            </div>
+
+                            {/* Moving Equalizer or audio pulse to signify play speed */}
+                            <div className="flex items-center gap-1.5 h-14 justify-center">
+                              {VIDEO_CHAPTERS[activeChapter].barHeights.map((h, i) => (
+                                <div 
+                                  key={i} 
+                                  className="w-1 rounded-full bg-gradient-to-t from-brand-red to-zinc-500 transition-all duration-300"
+                                  style={{ 
+                                    height: isPlaying ? `${Math.max(10, h * (1 + Math.sin(Date.now() / 400 + i) * 0.15))}%` : '8px'
+                                  }}
+                                />
+                              ))}
+                            </div>
+
+                            {/* Large Action play/pause symbol overlay */}
+                            <button 
+                              onClick={handlePlayToggle}
+                              className="mt-4 w-10 h-10 rounded-full bg-brand-red hover:bg-[#b00e0e] text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-md z-15 cursor-pointer animate-pulse"
+                            >
+                              {isPlaying ? <Pause className="w-4 h-4 fill-current text-white" /> : <Play className="w-4 h-4 fill-current text-white ml-0.5" />}
+                            </button>
+
+                          </div>
+
+                        </div>
+
+                        {/* Player control footer for storyboard simulator */}
+                        <div className="flex items-center justify-between text-zinc-500 font-mono text-[10px] mt-4 pt-1 select-none z-10 opacity-70">
+                          <div className="flex items-center gap-4">
+                            <button onClick={handlePlayToggle} className="text-zinc-300 hover:text-brand-red cursor-pointer">
+                              {isPlaying ? 'PAUSE' : 'PLAY'}
+                            </button>
+                            <span>TRACK CH-0{activeChapter + 1}</span>
+                          </div>
+                          
+                          <div className="flex items-center gap-4">
+                            <button onClick={handleMuteToggle} className="text-zinc-400 hover:text-white flex items-center gap-1 cursor-pointer">
+                              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-brand-red" /> : <Volume2 className="w-3.5 h-3.5 text-zinc-400" />}
+                              <span>{isMuted ? 'UNMUTE_SYSTEM_AUDIO' : 'MUTE'}</span>
+                            </button>
+                            <span className="text-zinc-400">{VIDEO_CHAPTERS[activeChapter].time}</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Caption Overlaid Block (mimics video subtitles - displayed in both modes) */}
+                  <div className="z-10 p-4 bg-zinc-950/90 border-t border-white/5 text-left space-y-1 mt-4 rounded-xl relative">
+                    <span className="text-[8px] font-mono text-zinc-500 uppercase font-bold tracking-widest block">CHAPTER CONTENT TRANSCRIPT:</span>
+                    <p className="text-[11px] leading-relaxed text-zinc-300 font-sans italic">
+                      {VIDEO_CHAPTERS[activeChapter].caption}
+                    </p>
                   </div>
 
                 </div>
@@ -508,7 +610,7 @@ export default function ResearchJournal() {
                     A look at early sketches and paper iterations.
                   </h3>
                   <p className="text-sm text-zinc-400 leading-relaxed font-sans">
-                    Our process was driven heavily by iterative wireframing. The first paper mockup targeted how a user calibrates form under active exercise setups. We evaluated how to deliver metrics back to the athlete without distracting their focus while weights were suspended in transition.
+                    Our process was driven heavily by iterative wireframing and paper prototyping. The first paper mockup targeted how a user calibrates form under active exercise setups. We evaluated how to deliver metrics back to the athlete without distracting their focus while weights were suspended in transition.
                   </p>
                 </div>
 
@@ -534,11 +636,99 @@ export default function ResearchJournal() {
                 </div>
               </div>
 
-              {/* Side-by-Side Paper Iteration vs Digital Mockup comparison */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+              {/* Physical Paper Prototype & Smartwatch Removal Case Study Section */}
+              <div id="paper-prototype-case-study" className="bg-[#0e0e11] border border-white/5 rounded-xl p-6 sm:p-8 space-y-6">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-white/5 pb-5">
+                  <div className="text-left">
+                    <span className="text-[10px] font-mono font-bold text-brand-red uppercase tracking-widest bg-brand-red/10 px-2.5 py-1 rounded border border-brand-red/20 inline-block mb-1">
+                      INITIAL DISCOVERY PHASE
+                    </span>
+                    <h4 className="text-xl font-bold text-white tracking-tight">Ecosystem Architecture & Smartwatch Removal Pivoting</h4>
+                    <p className="text-xs text-zinc-400 mt-1">Our original physical concept included a smartwatch, later streamlined model-wide to protect kinetic symmetry.</p>
+                  </div>
+                  <div className="text-[9px] font-mono text-zinc-400 bg-zinc-900 px-3 py-1.5 rounded border border-white/5 shrink-0 font-bold uppercase tracking-wider">
+                    📸 DESIGN RESEARCH PHOTO ARTIFACT
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                  
+                  {/* Left Column: Embed Image with beautiful viewport shell */}
+                  <div className="lg:col-span-6 flex flex-col justify-between">
+                    <div className="bg-[#08080a] p-4 border border-white/5 rounded-xl shadow-2xl relative overflow-hidden group h-full flex flex-col justify-between">
+                      <div className="absolute top-3 right-3 z-20 bg-brand-red text-white text-[8px] font-mono font-bold px-2.5 py-1 rounded shadow-md uppercase tracking-wider">
+                        Original Artifact
+                      </div>
+                      
+                      {/* Viewport frame containing the actual or generated image */}
+                      <div className="aspect-[4/3] bg-zinc-950 rounded-lg border border-white/5 relative overflow-hidden flex items-center justify-center flex-grow">
+                        <img 
+                          src="/src/assets/images/paper_prototype_1780805878415.png" 
+                          alt="Physical paper prototype of IronPath on turf showcasing T-shirt sensor nodes, card wearables, wireless earbud mock, and paper smartwatch dial next to cardboard mirror"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      
+                      <div className="mt-3.5 text-center text-[10px] font-mono text-zinc-500 leading-normal border-t border-white/5 pt-2.5">
+                        <strong className="text-zinc-400 font-bold">Fig 1.1:</strong> Initial paper prototype with Aeroweave shirt sensor markers, nape hub pod, earbuds, paper smartwatch mockup (center-right), and cardboard triple-mirror.
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Deep Design Thinking & Pivot Analysis */}
+                  <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
+                    <div className="space-y-4">
+                      <h5 className="text-xs font-mono font-bold text-zinc-300 uppercase tracking-widest flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-brand-red rounded-full" />
+                        UNDERSTANDING THE FOUR-COMPONENT TRIAL
+                      </h5>
+                      <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+                        As shown in <strong className="text-zinc-300 font-medium font-bold">Fig 1.1</strong>, our very first low-fidelity paper prototype was mapped across four simultaneous touchpoints: the biometric compression shirt (with reflective markers), a haptic earbud pod, a folding cardboard screen mockup (the Smart Mirror), and a wearable paper smartwatch element.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-lg bg-zinc-950 border border-white/5 space-y-4 flex-grow">
+                      <div className="flex items-center gap-2 border-b border-white/5 pb-2.5">
+                        <AlertTriangle className="text-brand-red w-4 h-4 shrink-0" />
+                        <span className="text-[10px] font-mono font-bold text-white uppercase tracking-wider">WHY WE PIVOTED: REMOVING THE SMARTWATCH</span>
+                      </div>
+                      
+                      <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+                        Early evaluations, focus tests, and biomechanical posture analysis revealed that a smartwatch was are redundant and actively introduced <strong className="text-brand-red font-semibold font-bold">postural instability</strong> during lifter testing:
+                      </p>
+
+                      <ul className="space-y-4 text-xs font-sans">
+                        <li className="flex gap-2 text-zinc-300">
+                          <span className="text-brand-red font-mono text-[9px] font-bold shrink-0 mt-0.5 bg-brand-red/10 px-1.5 py-0.5 rounded border border-brand-red/20">PIVOT A</span>
+                          <p className="leading-relaxed">
+                            <strong className="text-zinc-100 font-bold block mb-0.5">Wrist Rotation Breeds Kinetic Form Breakdown:</strong> 
+                            Checking details on a wristwatch screen during a heavy squat or back lift forces the athlete to twist their arm inwards, shifting shoulder alignment, breaking back tension, and leading immediately to asymmetrical loading.
+                          </p>
+                        </li>
+                        <li className="flex gap-2 text-zinc-300">
+                          <span className="text-brand-red font-mono text-[9px] font-bold shrink-0 mt-0.5 bg-brand-red/10 px-1.5 py-0.5 rounded border border-brand-red/20">PIVOT B</span>
+                          <p className="leading-relaxed">
+                            <strong className="text-zinc-100 font-bold block mb-0.5">Component and Charging Satiation:</strong> 
+                            User testing confirmed athletes suffer from "device fatigue." Managing four individual accessories (suit, mirror, pod, watch) felt overwhelming. The active pairing of the 3D visual Smart Mirror HUD and instantaneous, hands-free Earbud audio lines already satisfied 100% of the active feedback loop.
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="text-[10.5px] bg-[#d97706]/5 text-amber-500/80 p-3.5 rounded-lg border border-[#d97706]/20 font-mono leading-relaxed italic text-left">
+                      💡 "Removing the smartwatch from our ecosystem reduced cognitive overstimulation, protected spinal posture during extreme strain, and simplified our final solution to a powerful 100% hands-free trinity."
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Paper Iteration Vector Simulation */}
+              <div className="mt-8">
                 
                 {/* PAPER Mockup Vector Simulation */}
-                <div className="border border-[#7c725c]/10 bg-[#161512]/15 p-6 sm:p-8 rounded-lg relative overflow-hidden flex flex-col justify-between space-y-6">
+                <div className="border border-[#7c725c]/10 bg-[#161512]/15 p-6 sm:p-8 rounded-lg relative overflow-hidden flex flex-col justify-between space-y-6 max-w-3xl mx-auto">
                   
                   {/* Title */}
                   <div>
@@ -623,60 +813,6 @@ export default function ResearchJournal() {
 
                   <span className="text-[10px] text-stone-500 font-mono tracking-wide leading-relaxed">
                     *Our low-fidelity iteration mapped variables including absolute knee displacement relative to shoelaces, torso flexion alarms, and visual dashboard grids.
-                  </span>
-                </div>
-
-                {/* HIGH-FIDELITY DIGITAL INTERACTION */}
-                <div className="border border-white/5 bg-[#0e0e11] p-6 sm:p-8 rounded-lg flex flex-col justify-between space-y-6">
-                  
-                  {/* Title */}
-                  <div>
-                    <span className="text-[10px] font-mono font-bold text-brand-red uppercase tracking-widest bg-brand-red/10 px-2.5 py-1 rounded border border-brand-red/20 inline-block mb-2">
-                      DIGITAL DEPLOYMENT STAGE (HIGH-FIDELITY INTERACTIVE CODE)
-                    </span>
-                    <h4 className="text-lg font-bold text-zinc-100 font-sans">The Computed Glass HUD overlay & Sensor Hotspots</h4>
-                    <p className="text-xs text-zinc-400 mt-1">The finalized operational simulation is live in our sandbox. It handles precise multi-joint mapping (Deadlift, Squat, Shoulder press) and hotspot telemetry decoding.</p>
-                  </div>
-
-                  {/* Digital screen mockup preview representing live apps */}
-                  <div className="bg-[#050506]/90 border border-white/5 p-4 rounded-lg aspect-[16/10] flex flex-col justify-between space-y-4">
-                    
-                    {/* Header stats dashboard */}
-                    <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
-                      <div className="flex items-center gap-1.5">
-                        <span className="inline-block w-2 h-2 rounded-full bg-brand-red animate-ping" />
-                        <span className="text-[9px] font-mono text-zinc-200">ACTIVE DETECTOR STATUS: COMPUTING</span>
-                      </div>
-                      <span className="text-[8.5px] font-mono text-[#10b981] bg-[#10b981]/15 px-2 py-0.5 rounded uppercase font-bold">SOLID SIGNAL BLE</span>
-                    </div>
-
-                    {/* Vector mapping snippet */}
-                    <div className="flex-grow flex items-center justify-center p-4">
-                      
-                      <div className="relative text-center w-full max-w-xs space-y-1">
-                        <span className="text-[8px] text-zinc-500 font-mono block tracking-widest uppercase">COMPUTERIZED MOTION ANALYSIS</span>
-                        <h5 className="text-sm font-extrabold text-white">99.8% Computed Joint Precision</h5>
-                        <p className="text-[10.5px] leading-relaxed text-zinc-400">
-                          Rather than manual estimation, the digital mockup is fully interactive, syncing with 2.4GHz low-latency broadcasts to render live joint vectors and warn you of spinal misalignment immediately.
-                        </p>
-                      </div>
-
-                    </div>
-
-                    {/* Footer list */}
-                    <div className="grid grid-cols-2 gap-4 text-[9px] font-mono text-zinc-500 leading-none pt-2 border-t border-zinc-850">
-                      <div>
-                        <span>PRIMARY AXIS: SAGITTAL</span>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-brand-red uppercase font-bold">STREAM LIVE OVERLAY</span>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <span className="text-[10px] text-zinc-500 font-mono tracking-wide leading-relaxed">
-                    *The living prototype is fully realized above in our sandbox environment, utilizing functional sliders allowing you to simulate posture failure.
                   </span>
                 </div>
 
