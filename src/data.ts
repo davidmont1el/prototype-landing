@@ -1,461 +1,348 @@
-import { Exercise, SensorHotspot, Testimonial } from './types';
 
-export const EXERCISES: Exercise[] = [
+export const SENSOR_HOTSPOTS = [
+  {
+    id: 'upper-body-signal',
+    x: 50,
+    y: 28,
+    title: 'Upper body signal area',
+    subtitle: 'Chest and shoulder engagement',
+    signalFreq: 'Muscle signal',
+    description:
+      'Embedded electrodes help the system detect upper-body muscle activity, such as whether the chest and shoulders are engaging during pressing movements.',
+    metrics: ['Muscle engagement', 'Chest activation', 'Upper-body control']
+  },
+  {
+    id: 'back-alignment',
+    x: 50,
+    y: 48,
+    title: 'Back alignment area',
+    subtitle: 'Spine and torso angle',
+    signalFreq: 'Posture cue',
+    description:
+      'Motion sensing helps the mirror notice when the user is leaning too far forward, losing a stable back position, or changing posture as fatigue builds.',
+    metrics: ['Back angle', 'Forward lean', 'Posture change']
+  },
+  {
+    id: 'side-body-signal',
+    x: 36,
+    y: 55,
+    title: 'Side body signal area',
+    subtitle: 'Balance and muscle control',
+    signalFreq: 'Muscle + balance cue',
+    description:
+      'This area helps compare left and right movement while also checking whether the user is staying controlled through the lift.',
+    metrics: ['Left-right balance', 'Body shift', 'Muscle control']
+  },
+  {
+    id: 'core-leg-signal',
+    x: 43,
+    y: 63,
+    title: 'Core and leg signal area',
+    subtitle: 'Stability and target muscle use',
+    signalFreq: 'Muscle signal',
+    description:
+      'Embedded sensors help estimate whether the user is bracing and engaging the intended muscles instead of compensating with unsafe movement patterns.',
+    metrics: ['Core stability', 'Target muscle use', 'Rep control']
+  }
+];
+
+export const EXERCISES = [
   {
     id: 'squat',
-    name: 'Barbell Back Squat',
+    name: 'Squat',
     category: 'Lower Body',
-    jointTarget: 'Hip & Knee Flexion',
-    idealAngleRange: '80° - 90° (At Max Depth)',
-    activeSensors: ['Spine Alignment', 'Breathing Rhythm Indicator', 'Foot arches'],
-    instructions: [
-      'Set back barbell across upper traps with a tight grip.',
-      'Inhale deep to brace core, then send hips down and back.',
-      'Maintain an upright spine, driving knees outward over toes.',
-      'Lower until thighs are parallel or below, then drive up.'
+    targetReps: 12,
+    currentSet: 2,
+    totalSets: 3,
+    currentWeight: 190,
+    repsPerWeek: 32,
+    averageFormScore: 92,
+    formWarnings: 4,
+    formCues: [
+      'Feet shoulder-width apart',
+      'Toes slightly outward',
+      'Core braced',
+      'Chest up',
+      'Knees track over toes',
+      'Drive through your heels'
     ],
-    deviations: {
-      lowLabel: 'Valgus (Knee Cave)',
-      highLabel: 'Thoracic Flexion (Spine Rounding)',
-      lowFeedback: 'Knees are caving inward. Drive your knees outward along your toe alignment to protect your ACL.',
-      highFeedback: 'Spine rounding detected. Pin your shoulder blades back and brace your abdominal wall.',
-      perfectFeedback: 'Exceptional form. Your spine angle matches your shin angle perfectly. Drive through the heels.'
-    },
-    getDefaultRig: (completion: number, deviation: number) => {
-      // 0 = Stand, 100 = Bottom of squat
-      const t = completion / 100;
-      
-      // Stand positions translated by t
-      const dropY = t * 42; // Drop amount
-      const hipBackX = t * 14; // Hips shifting back
-      const kneeForwardX = t * 6; // Knees shifting forward-out dynamic
-      
-      // Symmetrical spine alignment base x
-      const baseX = 100;
-      
-      // Perfect joints stand coordinates
-      let headY = 35 + dropY * 0.75;
-      let neckY = 55 + dropY * 0.8;
-      let spineY = 95 + dropY * 0.85;
-      
-      let headX = baseX;
-      let neckX = baseX;
-      let spineX = baseX;
-      
-      // If deviation > 0 (rounding back), the head and neck pull forward and down excessively, curving spine
-      if (deviation > 0) {
-        const factor = (deviation / 50);
-        headX += factor * 14 * t;
-        neckX += factor * 10 * t;
-        spineX -= factor * 4 * t;
+    commonCorrections: [
+      {
+        issue: 'Knees caving inward',
+        correction: 'Push your knees out'
+      },
+      {
+        issue: 'Forward lean',
+        correction: 'Chest up'
+      },
+      {
+        issue: 'Knees moving too far forward',
+        correction: 'Sit back'
+      },
+      {
+        issue: 'Repeated form breakdown',
+        correction: 'Reduce 5 lbs'
       }
-      
-      // Hips drop and go backward
-      let leftHipX = 85 - hipBackX * 0.5;
-      let rightHipX = 115 + hipBackX * 0.5;
-      let hipY = 135 + dropY;
-      
-      // Knees move slightly outward or cave inward
-      let kneeY = 175 + dropY * 0.35;
-      let leftKneeX = 80 - kneeForwardX;
-      let rightKneeX = 120 + kneeForwardX;
-      
-      // Deviation < 0 represents Knee Cave (valgus)
-      if (deviation < 0) {
-        // shift left kneex right and right kneex left
-        const caveAmount = (Math.abs(deviation) / 50) * 16 * t;
-        leftKneeX += caveAmount;
-        rightKneeX -= caveAmount;
-      }
-      
-      // Ankles stay flat firmly on floor
-      const leftAnkleX = 80;
-      const leftAnkleY = 220;
-      const rightAnkleX = 120;
-      const rightAnkleY = 220;
-      
-      // Arms (holding bar)
-      const leftShoulderX = 82;
-      const leftShoulderY = 65 + dropY * 0.8;
-      const rightShoulderX = 118;
-      const rightShoulderY = 65 + dropY * 0.8;
-      
-      const leftElbowX = 72;
-      const leftElbowY = 90 + dropY * 0.8;
-      const rightElbowX = 128;
-      const rightElbowY = 90 + dropY * 0.8;
-      
-      const leftWristX = 75;
-      const leftWristY = 70 + dropY * 0.8;
-      const rightWristX = 125;
-      const rightWristY = 70 + dropY * 0.8;
-      
-      return {
-        head: { x: headX, y: headY },
-        neck: { x: neckX, y: neckY },
-        leftShoulder: { x: leftShoulderX, y: leftShoulderY },
-        rightShoulder: { x: rightShoulderX, y: rightShoulderY },
-        leftElbow: { x: leftElbowX, y: leftElbowY },
-        rightElbow: { x: rightElbowX, y: rightElbowY },
-        leftWrist: { x: leftWristX, y: leftWristY },
-        rightWrist: { x: rightWristX, y: rightWristY },
-        spine: { x: spineX, y: spineY },
-        leftHip: { x: leftHipX, y: hipY },
-        rightHip: { x: rightHipX, y: hipY },
-        leftKnee: { x: leftKneeX, y: kneeY },
-        rightKnee: { x: rightKneeX, y: kneeY },
-        leftAnkle: { x: leftAnkleX, y: leftAnkleY },
-        rightAnkle: { x: rightAnkleX, y: rightAnkleY }
-      };
-    }
+    ],
+    progressData: [
+      { week: 'W1', weight: 170 },
+      { week: 'W2', weight: 180 },
+      { week: 'W3', weight: 180 },
+      { week: 'W4', weight: 190 }
+    ]
   },
   {
-    id: 'curl',
-    name: 'Dumbbell Bicep Curl',
+    id: 'bench-press',
+    name: 'Bench Press',
     category: 'Upper Body',
-    jointTarget: 'Elbow Flexion',
-    idealAngleRange: '35° (Max Flexion) - 170° (Full Hang)',
-    activeSensors: ['Shoulder Lock Stability Sensor', 'Bicep Contraction Node', 'Core Engagement Grid'],
-    instructions: [
-      'Stand upright, hold dumbbells by your sides, palms facing forward.',
-      'Squeeze core and lock elbow tips adjacent to ribs.',
-      'Curl the weights upward while keeping elbows static.',
-      'Exhale on concentric lift, then slowly decelerate back down.'
+    targetReps: 10,
+    currentSet: 1,
+    totalSets: 3,
+    currentWeight: 140,
+    repsPerWeek: 28,
+    averageFormScore: 89,
+    formWarnings: 4,
+    formCues: [
+      'Feet planted',
+      'Shoulder blades set',
+      'Wrists stacked',
+      'Lower with control',
+      'Press evenly'
     ],
-    deviations: {
-      lowLabel: 'Elbow Flare / Shoulder Sway',
-      highLabel: 'Hip Momentum Assist',
-      lowFeedback: 'Your elbows are flaring outward. Tuck them securely adjacent to your waist for pure bicep recruitment.',
-      highFeedback: 'You are using lower back momentum. Lock your hips and engage glutes to keep the lift strict.',
-      perfectFeedback: 'Flawless elbow tracking and locked torso. Absolute isolation. Keep resisting on the eccentric phase.'
-    },
-    getDefaultRig: (completion: number, deviation: number) => {
-      // 0 = Arm extended, 100 = Curled
-      const t = completion / 100;
-      
-      // Fixed torso base
-      let headX = 100;
-      let spineX = 100;
-      let hipX = 100;
-      
-      // If deviation > 0 (swing momentum), hips slide back and spine tilts back to assist lift
-      if (deviation > 0) {
-        const factor = (deviation / 50) * t;
-        hipX -= factor * 8;
-        spineX += factor * 5;
-        headX += factor * 3;
+    commonCorrections: [
+      {
+        issue: 'Uneven press',
+        correction: 'Press both arms evenly'
+      },
+      {
+        issue: 'Wrists bending back',
+        correction: 'Stack wrists over elbows'
+      },
+      {
+        issue: 'Bar drifting forward',
+        correction: 'Keep bar path controlled'
       }
-      
-      let leftShoulderX = 80;
-      let rightShoulderX = 120;
-      let leftShoulderY = 65;
-      let rightShoulderY = 65;
-      
-      let leftElbowX = 76;
-      let rightElbowX = 124;
-      const elbowY = 110;
-      
-      // If deviation < 0 (Elbow flare), move elbows outward
-      if (deviation < 0) {
-        const flare = (Math.abs(deviation) / 50) * 12;
-        leftElbowX -= flare;
-        rightElbowX += flare;
-      }
-      
-      // Wrist coordinates rotate in a circular path starting at Y=150, ending at Y=75
-      // Perfect path is circular around Elbow (76, 110)
-      // Radius ~ 40px
-      // 0% -> Angle = Math.PI / 2 (down)
-      // 100% -> Angle = -Math.PI / 2.3 (up, pointing slightly back)
-      const startAngle = Math.PI / 2;
-      const endAngle = -Math.PI / 2.4;
-      const currentAngle = startAngle - t * (startAngle - endAngle);
-      
-      const leftWristX = leftElbowX + 40 * Math.cos(currentAngle);
-      const leftWristY = elbowY + 40 * Math.sin(currentAngle);
-      const rightWristX = rightElbowX - 40 * Math.cos(currentAngle);
-      const rightWristY = elbowY + 40 * Math.sin(currentAngle);
-      
-      return {
-        head: { x: headX, y: 35 },
-        neck: { x: 100, y: 55 },
-        leftShoulder: { x: leftShoulderX, y: leftShoulderY },
-        rightShoulder: { x: rightShoulderX, y: rightShoulderY },
-        leftElbow: { x: leftElbowX, y: elbowY },
-        rightElbow: { x: rightElbowX, y: elbowY },
-        leftWrist: { x: leftWristX, y: leftWristY },
-        rightWrist: { x: rightWristX, y: rightWristY },
-        spine: { x: spineX, y: 95 },
-        leftHip: { x: hipX - 15, y: 135 },
-        rightHip: { x: hipX + 15, y: 135 },
-        leftKnee: { x: 85, y: 175 },
-        rightKnee: { x: 115, y: 175 },
-        leftAnkle: { x: 85, y: 220 },
-        rightAnkle: { x: 115, y: 220 }
-      };
-    }
-  },
-  {
-    id: 'press',
-    name: 'Overhead Shoulder Press',
-    category: 'Upper Body',
-    jointTarget: 'Shoulder Abduction',
-    idealAngleRange: '60° (Bottom) - 180° (Lockout)',
-    activeSensors: ['Spine Alignment', 'Neck Strain Detector', 'Sholder Level Grid'],
-    instructions: [
-      'Clean dumbbells to heights of shoulders, knuckles facing forward.',
-      'Squeeze thighs and glutes to build a bulletproof platform.',
-      'Squeeze shoulder blades and drive dumbbells vertical.',
-      'Lockout overhead with arms parallel, then lower with tempo.'
     ],
-    deviations: {
-      lowLabel: 'Incomplete Lockout / Flared Knees',
-      highLabel: 'Lumbar Lordosis (Hyperextension)',
-      lowFeedback: 'Knees bent or soft lockouts spotted. Drive overhead through back strength & straighten arms completely.',
-      highFeedback: 'Inordinate lower back extension. Keep your core tight, ribs tucked down, and glutes active.',
-      perfectFeedback: 'Beautiful lockout sequence. Arms directly in line with ears. Strong, stable base holding weight.'
-    },
-    getDefaultRig: (completion: number, deviation: number) => {
-      // 0 = Shoulders setup, 100 = Push overhead
-      const t = completion / 100;
-      
-      let headX = 100;
-      let spineX = 100;
-      let hipX = 100;
-      
-      // If deviation > 0 (lumbar arch), spine and hip shove forward while head leans slightly back
-      if (deviation > 0) {
-        const factor = (deviation / 50) * t;
-        spineX += factor * 10;
-        hipX += factor * 8;
-        headX -= factor * 2;
-      }
-      
-      const leftShoulderX = 80;
-      const rightShoulderX = 120;
-      const shoulderY = 70;
-      
-      // Let's model wrists going from (80, 80) / (120, 80) fully up to (85, 20) / (115, 20)
-      // When complete lock, elbows straighten out
-      // 0% -> Elbows: (70, 95)    Wrists: (78, 80)
-      // 100% -> Elbows: (83, 40)   Wrists: (85, 20)
-      let leftElbowX = 72 + t * 11;
-      let leftElbowY = 95 - t * 55;
-      
-      let rightElbowX = 128 - t * 11;
-      let rightElbowY = 95 - t * 55;
-      
-      let leftWristX = 76 + t * 9;
-      let leftWristY = 80 - t * 62;
-      
-      let rightWristX = 124 - t * 9;
-      let rightWristY = 80 - t * 62;
-      
-      // If deviation < 0 (Incomplete lockout / arm bent)
-      if (deviation < 0) {
-        const bended = (Math.abs(deviation) / 50) * 15 * t;
-        leftWristY += bended;
-        rightWristY += bended;
-        leftElbowY += bended * 0.5;
-        rightElbowY += bended * 0.5;
-      }
-      
-      return {
-        head: { x: headX, y: 35 },
-        neck: { x: 100, y: 55 },
-        leftShoulder: { x: leftShoulderX, y: shoulderY },
-        rightShoulder: { x: rightShoulderX, y: shoulderY },
-        leftElbow: { x: leftElbowX, y: leftElbowY },
-        rightElbow: { x: rightElbowX, y: rightElbowY },
-        leftWrist: { x: leftWristX, y: leftWristY },
-        rightWrist: { x: rightWristX, y: rightWristY },
-        spine: { x: spineX, y: 95 },
-        leftHip: { x: hipX - 15, y: 135 },
-        rightHip: { x: hipX + 15, y: 135 },
-        leftKnee: { x: 85, y: 175 },
-        rightKnee: { x: 115, y: 175 },
-        leftAnkle: { x: 85, y: 220 },
-        rightAnkle: { x: 115, y: 220 }
-      };
-    }
+    progressData: [
+      { week: 'W1', weight: 120 },
+      { week: 'W2', weight: 130 },
+      { week: 'W3', weight: 130 },
+      { week: 'W4', weight: 140 }
+    ]
   },
   {
     id: 'deadlift',
-    name: 'Barbell Deadlift',
+    name: 'Deadlift',
     category: 'Lower Body',
-    jointTarget: 'Hip Hinge & Spine Flexion',
-    idealAngleRange: 'Straight Spine, Active Hinge (15° - 45° Torso Tilt)',
-    activeSensors: ['Spine Straightness Strain', 'Hip Leverage Center', 'Glute Conduction Tension'],
-    instructions: [
-      'Stand with feet hip-width apart, barbell resting over mid-foot.',
-      'Hinge at hips, bending knees slightly, and grip bar outside of shins.',
-      'Flatten your spine fully, pulling chest up to lift slack out of the barbell.',
-      'Drive feet hard into floor, keeping bar close, and extend hips to lock out.'
+    targetReps: 8,
+    currentSet: 2,
+    totalSets: 3,
+    currentWeight: 225,
+    repsPerWeek: 22,
+    averageFormScore: 86,
+    formWarnings: 5,
+    formCues: [
+      'Bar close to shins',
+      'Chest up',
+      'Back flat',
+      'Push the floor away',
+      'Lock out with control'
     ],
-    deviations: {
-      lowLabel: 'Excessive Forward Lean',
-      highLabel: 'Lumbar Flexion (Barbell Round Back)',
-      lowFeedback: 'Knees drifted forward past toes excessively. Sit your hips slightly back and down to stack shins vertically.',
-      highFeedback: 'Dangerous lower spine rounding detected. Hinge deeply, engage lat muscles, and pull chest up to pull barbell slack.',
-      perfectFeedback: 'Pristine rigid neutral spine. Hinge angle has beautiful leverage control. Stand with powerful hip extension.'
-    },
-    getDefaultRig: (completion: number, deviation: number) => {
-      // 0 = Lockout standing upright, 100 = Bottom bar on floor
-      const t = completion / 100;
-      const baseX = 100;
-      
-      let headY = 35 + t * 45;
-      let headX = baseX + t * 16;
-      let neckY = 55 + t * 42;
-      let neckX = baseX + t * 14;
-      let spineY = 95 + t * 25;
-      let spineX = baseX - t * 15;
-      
-      // If deviation > 0 (rounding back in deadlift)
-      if (deviation > 0) {
-        const factor = (deviation / 50) * t;
-        spineX -= factor * 14; // curve back outward
-        headX += factor * 8;
-        neckX += factor * 6;
+    commonCorrections: [
+      {
+        issue: 'Back rounding',
+        correction: 'Brace and flatten back'
+      },
+      {
+        issue: 'Bar drifting away',
+        correction: 'Keep bar close'
+      },
+      {
+        issue: 'Hips rising too early',
+        correction: 'Push through your legs'
       }
-      
-      // Left/Right Hips shift back and down
-      let hipY = 135 + t * 15;
-      let leftHipX = 85 - t * 18;
-      let rightHipX = 115 - t * 18;
-      
-      // Keeping it balanced:
-      let leftKneeX = 82 - t * 2;
-      let leftKneeY = 175 + t * 10;
-      let rightKneeX = 118 - t * 2;
-      let rightKneeY = 175 + t * 10;
-      
-      // If deviation < 0 (Forward Lean / Knees past toes too much)
-      if (deviation < 0) {
-        const factor = (Math.abs(deviation) / 50) * t;
-        leftKneeX += factor * 12; // knee drift forward
-        rightKneeX += factor * 12;
+    ],
+    progressData: [
+      { week: 'W1', weight: 210 },
+      { week: 'W2', weight: 220 },
+      { week: 'W3', weight: 220 },
+      { week: 'W4', weight: 225 }
+    ]
+  },
+  {
+    id: 'overhead-press',
+    name: 'Overhead Press',
+    category: 'Upper Body',
+    targetReps: 10,
+    currentSet: 1,
+    totalSets: 3,
+    currentWeight: 80,
+    repsPerWeek: 32,
+    averageFormScore: 88,
+    formWarnings: 3,
+    formCues: [
+      'Core braced',
+      'Glutes tight',
+      'Press straight up',
+      'Head moves through',
+      'Control the lockout'
+    ],
+    commonCorrections: [
+      {
+        issue: 'Back arching',
+        correction: 'Brace your core'
+      },
+      {
+        issue: 'Bar path drifting',
+        correction: 'Press straight up'
+      },
+      {
+        issue: 'Loose lockout',
+        correction: 'Finish under control'
       }
-      
-      const leftAnkleX = 80;
-      const leftAnkleY = 220;
-      const rightAnkleX = 120;
-      const rightAnkleY = 220;
-      
-      // Wrists reach down holding bar
-      let leftShoulderX = 82 + t * 14;
-      let leftShoulderY = 65 + t * 35;
-      let rightShoulderX = 118 + t * 14;
-      let rightShoulderY = 65 + t * 35;
-      
-      let leftElbowX = 78 + t * 16;
-      let leftElbowY = 95 + t * 32;
-      let rightElbowX = 122 + t * 12;
-      let rightElbowY = 95 + t * 32;
-      
-      let leftWristX = 78 + t * 18;
-      let leftWristY = 120 + t * 35;
-      let rightWristX = 122 + t * 14;
-      let rightWristY = 120 + t * 35;
-      
-      return {
-        head: { x: headX, y: headY },
-        neck: { x: neckX, y: neckY },
-        leftShoulder: { x: leftShoulderX, y: leftShoulderY },
-        rightShoulder: { x: rightShoulderX, y: rightShoulderY },
-        leftElbow: { x: leftElbowX, y: leftElbowY },
-        rightElbow: { x: rightElbowX, y: rightElbowY },
-        leftWrist: { x: leftWristX, y: leftWristY },
-        rightWrist: { x: rightWristX, y: rightWristY },
-        spine: { x: spineX, y: spineY },
-        leftHip: { x: leftHipX, y: hipY },
-        rightHip: { x: rightHipX, y: hipY },
-        leftKnee: { x: leftKneeX, y: leftKneeY },
-        rightKnee: { x: rightKneeX, y: rightKneeY },
-        leftAnkle: { x: leftAnkleX, y: leftAnkleY },
-        rightAnkle: { x: rightAnkleX, y: rightAnkleY }
-      };
-    }
+    ],
+    progressData: [
+      { week: 'W1', weight: 60 },
+      { week: 'W2', weight: 70 },
+      { week: 'W3', weight: 70 },
+      { week: 'W4', weight: 80 }
+    ]
   }
 ];
 
-export const SENSOR_HOTSPOTS: SensorHotspot[] = [
+export const DESIGN_REVISIONS = [
   {
-    id: 'chest-ecg',
-    title: 'IronPath Bio-Conduction Fibers',
-    subtitle: 'Integrated ECG Mesh',
-    x: 50,
-    y: 28,
-    metrics: ['VO2 Max Estimation', 'ECG Wave (Heart Rate)', 'Autonomic Index (HRV)'],
-    description: 'Knitted directly into the chest fibers, active metallic yarns record clinical-grade electrocardiogram streams, bypassing the noise typical of optical wrist-sensors.',
-    techSpec: 'Silver-Plated Nylon Micro-Weave Core | 300Hz Capture Frequency',
-    signalFreq: '300 Hz'
+    title: 'Added a system tutorial',
+    issue:
+      'Participants were confused about how the clothing, smart mirror, and earbuds worked together.',
+    revision:
+      'We added a “How It Works” tutorial that explains each component before the user starts a workout.',
+    impact:
+      'This made the system easier to understand and helped users see the smart mirror as the central interface.'
   },
   {
-    id: 'back-imu',
-    title: 'Spinal Alignment Microgrid',
-    subtitle: 'Multi-Axis Inertial Node',
-    x: 50,
-    y: 48,
-    metrics: ['Spine Extension Angle', 'Torso Rotation Rate', 'Lateral Pitch Deviation'],
-    description: 'A dedicated multi-axial orientation micro-node nestled over the thoracic spine tracks flexion and twists, updating your form frame in perfect lockstep with the smart mirror.',
-    techSpec: '9-DOF Ultra-Low Draw Sensor | 0.05° Static Pitch/Roll Resolution',
-    signalFreq: '120 Hz'
+    title: 'Removed the smartwatch',
+    issue:
+      'The early system had too many devices, which made the experience feel more complicated than necessary.',
+    revision:
+      'We removed the smartwatch and moved its main functions into the smart mirror.',
+    impact:
+      'This simplified the system and reduced the number of places users had to look during a workout.'
   },
   {
-    id: 'lats-respiration',
-    title: 'Lats Volumetric Stretch Sensor',
-    subtitle: 'Respiratory Volumetric Elastic Band',
-    x: 35,
-    y: 45,
-    metrics: ['Respiratory Rate', 'Intra-Abdominal Brace Consistency', 'Tidal Wave Depth'],
-    description: 'Measures continuous chest and lat expansion via stretch-conductive fibers. Coaches you on optimal Valsalva bracing right before heavy loads.',
-    techSpec: 'Highly elastic silicone-embedded resistive ribbon | 50Hz Volumetric Scan',
-    signalFreq: '50 Hz'
+    title: 'Added an in-workout help button',
+    issue:
+      'A participant wanted to check whether their squat position was correct but could not find a quick way to review form guidance.',
+    revision:
+      'We added a tutorial/help option during workouts so users can review correct form cues when needed.',
+    impact:
+      'This gives newer users extra support without forcing experienced users through a tutorial every time.'
   },
   {
-    id: 'nape-pod',
-    title: 'IronPath Core Hub',
-    subtitle: 'Zero-Latency Bluetooth Nodule',
-    x: 50,
-    y: 12,
-    metrics: ['BT Long-Range 5.3', '100HR Liquid-Lithium Cell', 'IP69K Immersion Waterproof'],
-    description: 'The ultra-compact central hub sitting in a custom nape receptacle. Coordinates multi-sensor data synchronization & broadcasts directly to the mirror cabinet using ultra-low latency.',
-    techSpec: 'ARM Cortex-M4 Controller | 2.4GHz Ultra-Low-Latency LE Protocol | Waterproof Magnet Dock',
-    signalFreq: 'Bluetooth LE'
+    title: 'Condensed progress tracking',
+    issue:
+      'Participants were confused by the consistency percentage and did not understand how it related to reps or workout performance.',
+    revision:
+      'We redesigned progress around concrete metrics: weight, reps, form score, and form warnings.',
+    impact:
+      'This made progress easier to interpret and connected the screen more clearly to the user’s actual workouts.'
+  },
+  {
+    title: 'Clarified earbuds as safety-only alerts',
+    issue:
+      'Users needed to understand that earbuds were not another full interface.',
+    revision:
+      'We clarified that earbuds only provide simple alerts when the user should stop, reset, or reduce weight.',
+    impact:
+      'This supports safer lifting without requiring the user to stare at the mirror during heavy reps.'
   }
 ];
 
-export const RECENT_TESTIMONIALS: Testimonial[] = [
+export const FAQ_ITEMS = [
   {
-    id: 't-1',
-    author: 'Elena Rostova',
-    role: 'Olympic Weightlifting Competitor',
-    rating: 5,
-    comment: 'The precision is terrifying. For a long time, my left shin was tracking inward during cleans, and no trainer caught it. IronPath flagged the 4° knee drift on rep two, and I broke my squat record in 4 weeks.',
-    avatarUrl: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&q=80&w=150&h=150'
+    question: 'Do I have to stare at the mirror while lifting?',
+    answer:
+      'No. The mirror is useful for setup, tutorials, and explanations, but the earbuds provide simple safety alerts during heavy lifts so the user does not have to keep looking at the screen.'
   },
   {
-    id: 't-2',
-    author: 'Dr. Marcus Vance',
-    role: 'Physical Therapy Lead / Sports Scientist',
-    rating: 5,
-    comment: 'Wearable systems are usually hindered by wrist placement or bad calculations. Coupling the high-fidelity biomechanical data from the IronPath Smart Shirt with the visual feedback of the Mirror solves the feedback loop.',
-    avatarUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=150&h=150'
+    question: 'What does the sensor clothing do?',
+    answer:
+      'The clothing tracks movement and posture while the user lifts. It sends that information to the smart mirror, where it becomes clear feedback like “chest up,” “sit back,” or “reduce 5 lbs.”'
+  },
+  {
+    question: 'Why did the final design remove the smartwatch?',
+    answer:
+      'Usability testing showed that having too many devices made the system feel confusing. We removed the smartwatch and made the smart mirror the main place for controls, tutorials, and progress.'
+  },
+  {
+    question: 'What do the earbuds do?',
+    answer:
+      'The earbuds provide safety-only alerts. For example, they can warn the user to stop after the current rep and reset if form becomes risky.'
+  },
+  {
+    question: 'How did usability testing change the progress screen?',
+    answer:
+      'Participants were confused by abstract consistency percentages, so we redesigned progress around concrete metrics: weight lifted, reps completed, average form score, and form warnings.'
+  },
+  {
+    question: 'Who is IronPath for?',
+    answer:
+      'IronPath is designed for people who strength train alone or without constant coaching, especially users who want help improving form and tracking progress over time.'
   }
 ];
 
-export const FAQS = [
+export const MOCKUP_TASKS = [
   {
-    question: "Do I have to look directly in the Mirror for stats to register?",
-    answer: "No. While the mirror provides breathtaking visual real-time feedback and skeleton overlay, your IronPath Smart Shirt contains internal memory. It records and synchronizes all biometric data and form vectors to your smartphone or mirror dashboard locally."
+    id: 'fix-form',
+    title: 'Task 1: Fix form during a workout',
+    summary:
+      'The user starts a workout, receives feedback when form becomes risky, and chooses whether to resume, practice a rep, or end the workout.',
+    steps: [
+      'Start workout from the smart mirror home screen',
+      'Review tutorial or begin the exercise',
+      'Receive a safety alert when form breaks down',
+      'Follow correction cues such as chest up, sit back, or reduce 5 lbs',
+      'Resume workout, practice a rep, or end the workout'
+    ]
   },
   {
-    question: "How do I wash the IronPath Smart Bio-Mesh Shirt?",
-    answer: "Remove the magnetic IronPath Core Hub from the nape of the neck. The shirt itself can go directly into typical washing machines and warm tumble driers — our silver ECG fibers and IMUs are integrated at a molecular yarn level."
+    id: 'track-progress',
+    title: 'Task 2: Track progress over time',
+    summary:
+      'The user opens progress, selects an exercise, and reviews improvement through concrete workout metrics.',
+    steps: [
+      'Open Progress from the smart mirror home screen',
+      'Choose an exercise from the progress list',
+      'Review weight, reps per week, average form score, and form warnings',
+      'Use progress trends to understand improvement over time'
+    ]
+  }
+];
+
+export const PRODUCT_SUMMARY = {
+  name: 'IronPath',
+  tagline: 'Your path. Your strength.',
+  shortDescription:
+    'IronPath is a smart strength-training system that helps solo lifters correct form in real time, receive safety alerts during heavy sets, and track progress over time.',
+  problem:
+    'Solo lifters often cannot tell when their form is becoming unsafe, especially during heavy or fatiguing sets.',
+  solution:
+    'IronPath combines a sensor clothing, smart mirror, and safety earbuds. The clothing tracks movement and muscle signals, the mirror explains what to fix, and the earbuds give quick alerts when the user should stop or reset.',
+  primaryUsers:
+    'People who strength train alone, newer lifters learning form, and experienced lifters who want clearer feedback during heavy sets.'
+};
+
+export const SITE_NAV_ITEMS = [
+  {
+    label: 'Design Journal',
+    href: '#design-archive'
   },
   {
-    question: "Does this require a subscription fees or hidden costs?",
-    answer: "IronPath operates with a hardware-inclusive dashboard. Every purchase comes with lifetime access to standard real-time biometric mirroring and personal stat dashboards. Optional Pro Live Coaching is available but never required for core features."
+    label: 'Final Demo',
+    href: '#smart-mirror-demo'
+  },
+  {
+    label: 'Poster Brief',
+    href: '#poster-brief'
   }
 ];
